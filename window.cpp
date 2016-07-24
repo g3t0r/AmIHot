@@ -4,3 +4,6 @@
 #include <time.h>
 #include "window.h"
 
+void window::get_window_parametrs(){
+	printw("Works \n");
+}
