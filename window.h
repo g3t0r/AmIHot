@@ -19,7 +19,9 @@ protected:
 	const static int window_graph_max_y = 23;
 	const static int window_graph_max_x = 4;
 public:
-	void get_window_parametrs();
+	void get_window_master_size();
+	void show_window_master_frame();
+	
 	
 };
 

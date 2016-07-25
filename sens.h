@@ -5,14 +5,23 @@
 #include "window.h"
 
 class sens :public window{
-	sensors_chip_name const *cn;
-	sensors_feature const *ft;
-	int c, f;
-	double value = 0;
-	bool stop_displaying = 0;
+	sensors_chip_name const *chip_name;
+	sensors_feature const *feature_name;
+	int chip_number = 0;
+	int feature_number = 0;
 	int temp = 0;
 	int temp_on_graph = 0;
+	double value = 0;
+	char *name;
+	char *label;
+	
 public:
-	void get_sens_patametrs();
+	bool temperature_sens = false;
+	bool fan_sens = false;
+	
+	void get_sens_patametrs(sensors_chip_name const *, sensors_feature const *, int, int);
+	void get_sens_type();
+	void refresh_value();
+	void test();
 	
 };
