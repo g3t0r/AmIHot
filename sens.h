@@ -5,6 +5,8 @@
 #include "window.h"
 
 class sens :public window{
+	WINDOW *localwin;
+	
 	sensors_chip_name const *chip_name;
 	sensors_feature const *feature_name;
 	int chip_number = 0;
@@ -13,11 +15,12 @@ class sens :public window{
 	int temp_on_graph = 0;
 	double value = 0;
 	char *name;
-	char *label;
+	
 	
 public:
 	bool temperature_sens = false;
 	bool fan_sens = false;
+	char *label;
 	
 	void get_sens_patametrs(sensors_chip_name const *, sensors_feature const *, int, int);
 	void get_sens_type();
