@@ -1,16 +1,40 @@
 #include <ncurses.h>
 #include <sensors/sensors.h>
+#include <unistd.h>
 #include <cstring>
 #include <time.h>
 #include "window.h"
 #include "sens.h"
 
 void graph_screen(sens *graph, int n_of_graph, window &win_m){
+	clear();
+	char c;
+	bool exit = false;
 	//printw("%s \n", graph[win_m.choosed_option].label);
 	//printw("%d", win_m.choosed_option);
-	graph[0].get_window_master_size();
-	graph[0].create_graph();
-	graph[0].show_graph_border();
+	graph[win_m.choosed_option].get_window_master_size();
+	win_m.show_window_master_frame();
+	graph[win_m.choosed_option].create_graph();
+	graph[win_m.choosed_option].show_graph_border();
+	while(exit == false){
+		//graph[win_m.choosed_option].get_window_master_size();
+		//win_m.show_window_master_frame();
+		
+		graph[win_m.choosed_option].show_graph_border();
+		graph[win_m.choosed_option].refresh_value();
+		graph[win_m.choosed_option].refresh_graph();
+		graph[win_m.choosed_option].test();
+		
+		timeout(100);
+		c = getch();
+		
+		
+		
+		//getch();
+		
+		
+	}
+	
 		
 }
 
@@ -29,6 +53,7 @@ void choose_sensor(sens *t_sens, int n_of_t_sens, window &win_m){
 }
 
 void main_loop(sens *t_sens, int n_of_t_sens){
+	bool exit_program = false;
 	bool exit = false;
 	
 	window win_master;
@@ -36,38 +61,41 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 	win_master.get_number_of_t_sensors(n_of_t_sens);
 	attron(COLOR_PAIR(1));
 	win_master.get_window_master_size();
-	while(exit == false){
-		
-		win_master.show_window_master_frame();
-		choose_sensor(t_sens, n_of_t_sens, win_master);
-		
-		switch(wgetch(stdscr)){
-			case KEY_UP:
-				if(win_master.choosed_option > 0){
-					win_master.choosed_option-- ;
-				}
-				
-				break;
-				continue;
-				
-			case KEY_DOWN:
-				if(win_master.choosed_option < n_of_t_sens -1){
-					win_master.choosed_option++ ;
-				}
-				
-				break;
-				continue;
-				
-			case 27:
-				exit = true;
-				clear();
-				graph_screen(t_sens, n_of_t_sens, win_master);
-				break;
-					
-				
+	while(exit_program == false){
+		while(exit == false){
+
+			win_master.show_window_master_frame();
+			choose_sensor(t_sens, n_of_t_sens, win_master);
+
+			switch(wgetch(stdscr)){
+				case KEY_UP:
+					if(win_master.choosed_option > 0){
+						win_master.choosed_option-- ;
+					}
+
+					break;
+					continue;
+
+				case KEY_DOWN:
+					if(win_master.choosed_option < n_of_t_sens -1){
+						win_master.choosed_option++ ;
+					}
+
+					break;
+					continue;
+
+				case 13:
+					exit = true;
+					clear();
+					graph_screen(t_sens, n_of_t_sens, win_master);
+					break;
+
+
 		}
-		
+
 	}
+	}
+	
 	
 	
 }
@@ -133,7 +161,7 @@ int main(){
 	for(i = 0; i < number_of_features; i++){
 		if(all_sens[i].temperature_sens == true){
 			temp_sens[j] = all_sens[i];
-			temp_sens[j].test();
+			//temp_sens[j].test();
 			j++ ;
 			
 			
@@ -144,7 +172,7 @@ int main(){
 	main_loop(temp_sens, number_of_t_sens);
 	//printw("%s", temp_sens[0].label);
 	
-	getch();
+	//getch();
 	
 	endwin();
 	

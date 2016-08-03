@@ -8,7 +8,7 @@
 
 class window{
 	
-	WINDOW *localwin;
+	
 	
 		
 	
@@ -17,15 +17,19 @@ class window{
 	
 	
 protected:
+	WINDOW *localwin;
 	int window_slave_start_y;
 	int window_slave_start_x;
 	
 	int window_graph_start_y = 10;
 	int window_graph_start_x = 4;
 	
+	int temp = 0;
+	int temp_on_graph = 0;
 	
-	int window_graph_max_y = 23;
-	int window_graph_max_x = 4;
+	
+	const static int window_graph_max_y = 23;
+	const static int window_graph_max_x = 4;
 public:
 	int window_master_max_y;
 	int window_master_max_x;
@@ -38,6 +42,8 @@ public:
 	void choose_sensor();
 	void create_graph();
 	void show_graph_border();
+	void destroy_graph();
+	
 	
 	//friend void choose_sensor();
 };
