@@ -6,7 +6,29 @@
 #include "window.h"
 #include "sens.h"
 
-void graph_screen(sens *graph, int n_of_graph, window &win_m){
+void help(window &win_m){
+	clear();
+	nodelay(stdscr, 0);
+	win_m.show_window_master_frame();
+	mvprintw(4, win_m.window_master_max_x/2 - sizeof("AmIHot v0.01 created by g3t0r (i.never.sleep@op.pl)")/2, "AmIHot v0.01 created by g3t0r (i.never.sleep@op.pl)" );
+	mvprintw(6, win_m.window_master_max_x/2 - sizeof("Use")/2, "Use" );
+	mvprintw(7, win_m.window_master_max_x/2 - sizeof("Arrows to move")/2, "Arrows to move" );
+	mvprintw(8, win_m.window_master_max_x/2 - sizeof("ESC to choose sensor")/2, "ESC to choose sensor");
+	mvprintw(9, win_m.window_master_max_x/2 - sizeof("Q or q to quit")/2, "Q or q to quit");
+	mvprintw(10, win_m.window_master_max_x/2 - sizeof("H or h to open this window")/2, "H or h to open this window");
+	mvprintw(12, win_m.window_master_max_x/2 - sizeof("No sensors detected?")/2, "No sensors detected?");
+	mvprintw(13, win_m.window_master_max_x/2 - sizeof("Try to run \"sensors-detect\" as root")/2, "Try to run \"sensors-detect\" as root");
+	mvprintw(15, win_m.window_master_max_x/2 - sizeof("All bugs and errors please report on my email(i.never.sleep@op.pl)")/2, "All bugs and errors please report on my email(i.never.sleep@op.pl)");
+	mvprintw(17, win_m.window_master_max_x/2 - sizeof("Updates will be published on my github profile(https://github.com/g3t0r)")/2, "Updates will be published on my github profile(https://github.com/g3t0r)");
+	
+	
+	getch();
+	clear();
+	win_m.show_window_master_frame();
+	
+}
+
+void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program){
 	clear();
 	char c;
 	bool exit = false;
@@ -23,11 +45,33 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m){
 		graph[win_m.choosed_option].show_graph_border();
 		graph[win_m.choosed_option].refresh_value();
 		graph[win_m.choosed_option].refresh_graph();
-		graph[win_m.choosed_option].test();
+		graph[win_m.choosed_option].show_temp();
 		
 		timeout(100);
-		c = getch();
-		
+		c = wgetch(stdscr);
+		nodelay(stdscr, 0);
+		switch(c){
+			case 'Q':
+				exit_program = true;
+				return;
+				break;
+				
+			case 'q':
+				exit_program = true;
+				return;
+				break;
+				
+			case 27:
+				exit = true;
+				graph[win_m.choosed_option].hide_temp();
+				break;
+				//return;
+				
+			case 'h':
+			exit = true;
+			help(win_m);
+			break;
+		}
 		
 		
 		//getch();
@@ -38,7 +82,9 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m){
 		
 }
 
-void choose_sensor(sens *t_sens, int n_of_t_sens, window &win_m){
+void choose_sensor(sens *t_sens, int n_of_t_sens, window &win_m, bool &exit_program){
+	//clear();
+	//win_m.show_window_master_frame();
 	for(int i = 0; i < n_of_t_sens; i++){
 		if(win_m.choosed_option == i){
 			attron(A_REVERSE);
@@ -62,10 +108,17 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 	attron(COLOR_PAIR(1));
 	win_master.get_window_master_size();
 	while(exit_program == false){
+		exit_program = false;
+		exit = false;
+		
 		while(exit == false){
+			
+			//clear();
+			wrefresh(stdscr);
+			
 
 			win_master.show_window_master_frame();
-			choose_sensor(t_sens, n_of_t_sens, win_master);
+			choose_sensor(t_sens, n_of_t_sens, win_master, exit_program);
 
 			switch(wgetch(stdscr)){
 				case KEY_UP:
@@ -87,8 +140,33 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 				case 13:
 					exit = true;
 					clear();
-					graph_screen(t_sens, n_of_t_sens, win_master);
+					graph_screen(t_sens, n_of_t_sens, win_master, exit_program);
 					break;
+					//continue;
+					
+				case 'Q':
+					exit_program = true;
+					return;
+					break;
+				
+				case 'q':
+					exit_program = true;
+					return;
+					break;
+					
+				case 'h':					
+					exit = true;					
+					clear();
+					help(win_master);
+					break;
+					
+				case 'H':					
+					exit = true;					
+					clear();
+					help(win_master);
+					break;
+					
+					
 
 
 		}
@@ -114,6 +192,7 @@ int main(){
 	curs_set(0);
 	sensors_init(NULL);
 	noecho();
+	nodelay(stdscr, TRUE);
 	
 	init_pair(1, COLOR_WHITE, COLOR_BLACK);
 	init_pair(2, COLOR_GREEN, COLOR_BLACK);

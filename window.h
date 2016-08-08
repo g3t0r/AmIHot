@@ -18,11 +18,11 @@ class window{
 	
 protected:
 	WINDOW *localwin;
-	int window_slave_start_y;
-	int window_slave_start_x;
+	//int window_slave_start_y;
+	//int window_slave_start_x;
 	
-	int window_graph_start_y = 10;
-	int window_graph_start_x = 4;
+	int window_graph_start_y = 0;
+	int window_graph_start_x = 0;
 	
 	int temp = 0;
 	int temp_on_graph = 0;

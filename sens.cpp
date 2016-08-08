@@ -95,3 +95,12 @@ void sens::refresh_graph(){
 			refresh();
 }
 
+void sens::show_temp(){
+	mvprintw(window_graph_start_y + window_graph_max_y, window_graph_start_x + window_graph_max_x/2 -2, "%d%cC", temp, 42);
+	refresh();
+}
+
+void sens::hide_temp(){
+	mvprintw(window_graph_start_y + window_graph_max_y, window_graph_start_x + window_graph_max_x/2 -2, "       ");
+	refresh();
+}

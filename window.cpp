@@ -23,7 +23,7 @@ void window::get_number_of_t_sensors(int n){
 
 void window::create_graph(){
 	localwin = newwin(window_graph_max_y, window_graph_max_x,
- window_graph_start_y, window_graph_start_x);
+	window_graph_start_y, window_graph_start_x);
  //localwin = newwin(23, 4, window_graph_max_y / 2, window_master_max_x /2 - window_graph_max_x /2);
 }
 

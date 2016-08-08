@@ -26,5 +26,6 @@ public:
 	void refresh_value();
 	void refresh_graph();
 	void test();
-	
+	void show_temp();
+	void hide_temp();
 };
