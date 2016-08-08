@@ -6,7 +6,7 @@
 #include "window.h"
 #include "sens.h"
 
-void help(window &win_m){
+void help(window &win_m, bool &exit_program){
 	clear();
 	nodelay(stdscr, 0);
 	win_m.show_window_master_frame();
@@ -22,7 +22,17 @@ void help(window &win_m){
 	mvprintw(17, win_m.window_master_max_x/2 - sizeof("Updates will be published on my github profile(https://github.com/g3t0r)")/2, "Updates will be published on my github profile(https://github.com/g3t0r)");
 	
 	
-	getch();
+	switch(wgetch(stdscr)){
+		case 'Q':
+			exit_program = true;
+			return;
+			break;
+				
+				case 'q':
+					exit_program = true;
+					return;
+					break;
+	}
 	clear();
 	win_m.show_window_master_frame();
 	
@@ -38,6 +48,7 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program
 	win_m.show_window_master_frame();
 	graph[win_m.choosed_option].create_graph();
 	graph[win_m.choosed_option].show_graph_border();
+	
 	while(exit == false){
 		//graph[win_m.choosed_option].get_window_master_size();
 		//win_m.show_window_master_frame();
@@ -68,9 +79,15 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program
 				//return;
 				
 			case 'h':
-			exit = true;
-			help(win_m);
-			break;
+				exit = true;
+				help(win_m, exit_program);
+				break;
+				
+			case 'H':
+				exit = true;
+				help(win_m, exit_program);
+				break;
+			
 		}
 		
 		
@@ -85,6 +102,8 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program
 void choose_sensor(sens *t_sens, int n_of_t_sens, window &win_m, bool &exit_program){
 	//clear();
 	//win_m.show_window_master_frame();
+	
+	mvprintw(win_m.window_master_max_y/2 - n_of_t_sens/2 -2, win_m.window_master_max_x/2 - sizeof("Choose sensor")/2, "Choose sensor");
 	for(int i = 0; i < n_of_t_sens; i++){
 		if(win_m.choosed_option == i){
 			attron(A_REVERSE);
@@ -107,6 +126,7 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 	win_master.get_number_of_t_sensors(n_of_t_sens);
 	attron(COLOR_PAIR(1));
 	win_master.get_window_master_size();
+	mvprintw(1,1,"Press h for help");
 	while(exit_program == false){
 		exit_program = false;
 		exit = false;
@@ -157,13 +177,13 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 				case 'h':					
 					exit = true;					
 					clear();
-					help(win_master);
+					help(win_master, exit_program);
 					break;
 					
 				case 'H':					
 					exit = true;					
 					clear();
-					help(win_master);
+					help(win_master, exit_program);
 					break;
 					
 					
