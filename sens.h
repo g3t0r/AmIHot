@@ -1,6 +1,5 @@
 #include <ncurses.h>
 #include <sensors/sensors.h>
-//#include <cstring>
 #include <time.h>
 #include "window.h"
 
@@ -28,4 +27,5 @@ public:
 	void test();
 	void show_temp();
 	void hide_temp();
+	void show_label();
 };

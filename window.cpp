@@ -18,13 +18,11 @@ void window::show_window_master_frame(){
 
 void window::get_number_of_t_sensors(int n){
 	number_of_t_sensors = n;
-	
 }
 
 void window::create_graph(){
 	localwin = newwin(window_graph_max_y, window_graph_max_x,
 	window_graph_start_y, window_graph_start_x);
- //localwin = newwin(23, 4, window_graph_max_y / 2, window_master_max_x /2 - window_graph_max_x /2);
 }
 
 void window::show_graph_border(){
@@ -35,13 +33,3 @@ void window::show_graph_border(){
 	wrefresh(localwin);
 	refresh();
 }
-
-
-/*void window::choose_sensor(){
-	for(int i = 0; i < number_of_t_sensors; i++){
-		if(choosed_option == i){
-			attron(A_REVERSE);
-			//mvprintw(window_master_max_y/2 - number_of_t_sensors/2 + i, "%s", )
-		}
-	}
-}*/

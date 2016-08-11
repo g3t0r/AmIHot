@@ -11,8 +11,6 @@ void sens::get_sens_patametrs(sensors_chip_name const *cn, sensors_feature const
 	feature_number = f;
 	name = ft->name;
 	label = sensors_get_label(cn, ft);
-	
-	
 }
 
 void sens::refresh_value(){
@@ -58,18 +56,15 @@ void sens::get_sens_type(){
 void sens::test(){
 	mvprintw(1, 1,"%f %d %f %d", temp, temp, temp_on_graph, temp_on_graph);
 	refresh();
-	//getch();
 }
 
 void sens::refresh_graph(){
-	//wclear(localwin);
 	for(int i = 0; i < temp_on_graph; i++){
 		 
 		if(i > 0 ){
 			wattron(localwin, COLOR_PAIR(2));
 			mvwaddch(localwin, window_graph_max_y -1 - i, 1, ACS_CKBOARD);
 			mvwaddch(localwin, window_graph_max_y -1 - i, 2, ACS_CKBOARD);
-			
 			wattroff(localwin ,COLOR_PAIR(2));			
 		}
 		
@@ -77,7 +72,6 @@ void sens::refresh_graph(){
 			wattron( localwin, COLOR_PAIR(3));
 			mvwaddch(localwin, window_graph_max_y -1 - i, 1, ACS_CKBOARD);
 			mvwaddch(localwin, window_graph_max_y -1 - i, 2, ACS_CKBOARD);
-			
 			wattroff(localwin, COLOR_PAIR(3));
 		}
 		
@@ -85,7 +79,6 @@ void sens::refresh_graph(){
 			wattron(localwin, COLOR_PAIR(4));
 			mvwaddch(localwin, window_graph_max_y -1 - i, 1, ACS_CKBOARD);
 			mvwaddch(localwin, window_graph_max_y -1 - i, 2, ACS_CKBOARD);
-			//refresh_window(localwin);
 			wattroff(localwin, COLOR_PAIR(4));
 			
 			
@@ -103,4 +96,8 @@ void sens::show_temp(){
 void sens::hide_temp(){
 	mvprintw(window_graph_start_y + window_graph_max_y, window_graph_start_x + window_graph_max_x/2 -2, "       ");
 	refresh();
+}
+
+void sens::show_label(){
+	mvprintw(window_graph_start_y -2, window_graph_start_x + window_graph_max_x/2 - sizeof(label)/2, "%s", label);
 }
