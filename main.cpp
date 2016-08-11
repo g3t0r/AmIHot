@@ -26,14 +26,10 @@ void help(window &win_m, bool &exit_program){
 	
 	switch(wgetch(stdscr)){
 		case 'Q':
+		case 'q':
 			exit_program = true;
 			return;
 			break;
-				
-				case 'q':
-					exit_program = true;
-					return;
-					break;
 	}
 	clear();
 	win_m.show_window_master_frame();
@@ -44,8 +40,7 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program
 	clear();
 	char c;
 	bool exit = false;
-	//printw("%s \n", graph[win_m.choosed_option].label);
-	//printw("%d", win_m.choosed_option);
+	
 	graph[win_m.choosed_option].get_window_master_size();
 	win_m.show_window_master_frame();
 	graph[win_m.choosed_option].create_graph();
@@ -54,8 +49,6 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program
 	mvprintw(1,1,"Press h for help");
 	
 	while(exit == false){
-		//graph[win_m.choosed_option].get_window_master_size();
-		//win_m.show_window_master_frame();
 		
 		graph[win_m.choosed_option].show_graph_border();
 		graph[win_m.choosed_option].refresh_value();
@@ -67,10 +60,6 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program
 		nodelay(stdscr, 0);
 		switch(c){
 			case 'Q':
-				exit_program = true;
-				return;
-				break;
-				
 			case 'q':
 				exit_program = true;
 				return;
@@ -84,30 +73,15 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program
 				//return;
 				
 			case 'h':
-				exit = true;
-				help(win_m, exit_program);
-				break;
-				
 			case 'H':
 				exit = true;
 				help(win_m, exit_program);
 				break;
-			
 		}
-		
-		
-		//getch();
-		
-		
 	}
-	
-		
 }
 
 void choose_sensor(sens *t_sens, int n_of_t_sens, window &win_m, bool &exit_program){
-	//clear();
-	//win_m.show_window_master_frame();
-	//mvprintw(1,1,"Press h for help");
 	
 	mvprintw(win_m.window_master_max_y/2 - n_of_t_sens/2 -2, win_m.window_master_max_x/2 - sizeof("Choose sensor")/2, "Choose sensor");
 	for(int i = 0; i < n_of_t_sens; i++){
@@ -128,7 +102,6 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 	bool exit = false;
 	
 	window win_master;
-	//win_master.get_window_master_size();
 	win_master.get_number_of_t_sensors(n_of_t_sens);
 	attron(COLOR_PAIR(1));
 	win_master.get_window_master_size();
@@ -138,12 +111,8 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 		exit = false;
 		
 		while(exit == false){
-		mvprintw(1,1,"Press h for help");
-			
-			//clear();
+			mvprintw(1,1,"Press h for help");
 			wrefresh(stdscr);
-			
-
 			win_master.show_window_master_frame();
 			choose_sensor(t_sens, n_of_t_sens, win_master, exit_program);
 
@@ -172,43 +141,25 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 					//continue;
 					
 				case 'Q':
-					exit_program = true;
-					return;
-					break;
-				
 				case 'q':
 					exit_program = true;
 					return;
 					break;
+				
 					
-				case 'h':					
+				case 'h':
+				case 'H':
 					exit = true;					
 					clear();
 					help(win_master, exit_program);
 					break;
-					
-				case 'H':					
-					exit = true;					
-					clear();
-					help(win_master, exit_program);
-					break;
-					
-					
 
-
+			}
 		}
-
 	}
-	}
-	
-	
-	
 }
 
 int main(){
-	
-	
-	
 	
 	initscr();
 	cbreak();
@@ -219,14 +170,11 @@ int main(){
 	curs_set(0);
 	sensors_init(NULL);
 	noecho();
-	//nodelay(stdscr, TRUE);
 	
 	init_pair(1, COLOR_WHITE, COLOR_BLACK);
 	init_pair(2, COLOR_GREEN, COLOR_BLACK);
 	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
 	init_pair(4, COLOR_RED, COLOR_BLACK);
-	
-	
 	
 	sensors_chip_name const *chip;
 	sensors_feature const *feature;
@@ -267,7 +215,6 @@ int main(){
 	for(i = 0; i < number_of_features; i++){
 		if(all_sens[i].temperature_sens == true){
 			temp_sens[j] = all_sens[i];
-			//temp_sens[j].test();
 			j++ ;
 			
 			
@@ -276,10 +223,6 @@ int main(){
 		
 			
 	main_loop(temp_sens, number_of_t_sens);
-	//printw("%s", temp_sens[0].label);
-	
-	//getch();
-	
 	endwin();
 	
 	return 0;
