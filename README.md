@@ -8,4 +8,4 @@ This is a program to monitor the temperature of the PC and display it to the bar
 
 If program can't detect sensors try to run sensors-detect as root
 
-![alt tag](http://imgur.com/a/JzTxF)
+![alt tag](http://imgur.com/VLvSSgW)
