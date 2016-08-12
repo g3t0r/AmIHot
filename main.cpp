@@ -7,6 +7,7 @@
 #include "sens.h"
 
 void help(window &win_m, bool &exit_program){
+	//test
 	clear();
 	nodelay(stdscr, 0);
 	win_m.show_window_master_frame();
