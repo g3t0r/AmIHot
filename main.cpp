@@ -138,6 +138,10 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 					clear();
 					graph_screen(t_sens, n_of_t_sens, win_master, exit_program);
 					break;
+<<<<<<< HEAD
+=======
+					//continue;
+>>>>>>> 79611c9807538372846900f769f5c183febca0a5
 					
 				case 'Q':
 				case 'q':
