@@ -16,6 +16,7 @@ class sens :public window{
 	
 	
 public:
+	
 	bool temperature_sens = false;
 	bool fan_sens = false;
 	char *label;

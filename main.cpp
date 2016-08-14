@@ -6,8 +6,69 @@
 #include "window.h"
 #include "sens.h"
 
+int how_many_graphs_on_screen(window &win_m, sens *t_sens, int n_of_pages, int actual_page){
+	int size = 0;
+	int pages = 0;
+	int graphs_on_screen = 0;
+	win_m.get_window_master_size();
+	for(int i = actual_page; i < n_of_pages; i++){
+		if(t_sens[i].space_for_graph + size < win_m.window_master_max_x){
+			size += t_sens[i].space_for_graph;
+			graphs_on_screen++;
+		}			
+		else
+			break;
+	}
+	return graphs_on_screen;
+}
+
+int how_many_pages(window &win_m, sens *t_sens, int n_of_t_sens, int &free_space){
+	int size = 0;
+	int pages = 0;
+	win_m.get_window_master_size();
+	for(int i = 0; i < n_of_t_sens; i++){
+		if(t_sens[i].space_for_graph + size < win_m.window_master_max_x)
+			size += t_sens[i].space_for_graph;
+		else
+		{
+			pages++;
+			size = 0;
+			i--;
+		}
+	}
+	
+	return pages;
+}
+
+void all_graphs_screen(window &win_m, sens *t_sens, int n_of_t_sens, bool &exit_program){
+	clear();
+	bool exit = false;
+	int free_space = 0;
+	int actual_graph = 0;
+	int actual_page = 0;
+	int pages = how_many_pages(win_m, t_sens, n_of_t_sens, free_space);
+	int graphs_on_screen = how_many_graphs_on_screen(win_m, t_sens, n_of_t_sens, 0);
+	
+	
+	for(int i  = 0; i <= pages; i++){
+		clear();
+		mvprintw(1 , 1, "ALL PAGES: %d", pages);
+		graphs_on_screen = how_many_graphs_on_screen(win_m, t_sens, n_of_t_sens, i);
+		mvprintw(2 , 1, "actual page: %d", i);
+		mvprintw(3 , 1, "graphs: %d", graphs_on_screen);
+		refresh();
+		getch();		
+		
+	}
+	refresh();
+	getch();
+		
+	
+	
+}
+
 void help(window &win_m, bool &exit_program){
-	//test_nowego_brancha
+	
 	clear();
 	nodelay(stdscr, 0);
 	win_m.show_window_master_frame();
@@ -71,7 +132,6 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program
 				graph[win_m.choosed_option].hide_temp();
 				clear();
 				break;
-				//return;
 				
 			case 'h':
 			case 'H':
@@ -153,6 +213,12 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 					clear();
 					help(win_master, exit_program);
 					break;
+					
+				case 'a':
+				case 'A':
+					exit = true;
+					all_graphs_screen(win_master, t_sens, n_of_t_sens, exit_program);
+				
 
 			}
 		}

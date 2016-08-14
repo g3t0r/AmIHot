@@ -18,8 +18,7 @@ class window{
 	
 protected:
 	WINDOW *localwin;
-	//int window_slave_start_y;
-	//int window_slave_start_x;
+	
 	
 	int window_graph_start_y = 0;
 	int window_graph_start_x = 0;
@@ -31,8 +30,11 @@ protected:
 	const static int window_graph_max_y = 23;
 	const static int window_graph_max_x = 4;
 public:
-	int window_master_max_y;
-	int window_master_max_x;
+	int window_master_max_y = 0;
+	int window_master_max_x = 0;
+	int window_graph_x = 0;
+	int window_graph_y = 0;
+	int space_for_graph = 0;
 	
 	int choosed_option = 0;
 	
@@ -44,8 +46,6 @@ public:
 	void show_graph_border();
 	void destroy_graph();
 	
-	
-	//friend void choose_sensor();
 };
 
 
