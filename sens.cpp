@@ -11,7 +11,7 @@ void sens::get_sens_patametrs(sensors_chip_name const *cn, sensors_feature const
 	feature_number = f;
 	name = ft->name;
 	label = sensors_get_label(cn, ft);
-	space_for_graph = strlen(label) + 2;
+	space_for_graph = strlen(label) + 1;
 }
 
 void sens::refresh_value(){
@@ -59,6 +59,21 @@ void sens::test(){
 	refresh();
 }
 
+void sens::create_graph(int x){
+	window_graph_x = x;
+	localwin = newwin(window_graph_max_y, window_graph_max_x,
+	window_graph_start_y, x);
+}
+
+void sens::show_graph_border(){
+	wclear(localwin);
+	wattron(localwin ,COLOR_PAIR(1));
+	box(localwin, 0, 0);
+	//refresh();
+	//wrefresh(localwin);
+	//refresh();
+}
+
 void sens::refresh_graph(){
 	for(int i = 0; i < temp_on_graph; i++){
 		 
@@ -85,20 +100,25 @@ void sens::refresh_graph(){
 			
 		}
 	}
-	wrefresh(localwin);
-			refresh();
+	//wrefresh(localwin);
+			//refresh();
 }
 
 void sens::show_temp(){
-	mvprintw(window_graph_start_y + window_graph_max_y, window_graph_start_x + window_graph_max_x/2 -2, "%d%cC", temp, 42);
-	refresh();
+	mvprintw(window_graph_start_y + window_graph_max_y, window_graph_x, "%d%cC", temp, 42);
+	//wrefresh(localwin);
+	//refresh();
 }
 
 void sens::hide_temp(){
-	mvprintw(window_graph_start_y + window_graph_max_y, window_graph_start_x + window_graph_max_x/2 -2, "       ");
+	mvprintw(window_graph_start_y + window_graph_max_y, window_graph_x, "       ");
 	refresh();
 }
 
 void sens::show_label(){
-	mvprintw(window_graph_start_y -2, window_graph_start_x + window_graph_max_x/2 - sizeof(label)/2, "%s", label);
+	mvprintw(window_graph_start_y -2, window_graph_x - strlen(label)/2 + 2 , "%s", label);
+}
+
+void sens::destroy_graph(){
+	delwin(localwin);
 }

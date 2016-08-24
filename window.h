@@ -7,16 +7,12 @@
 #define WINDOW_H
 
 class window{
-	
-	
-	
 		
-	
-	
 	int number_of_t_sensors = 0;
 	
 	
 protected:
+
 	WINDOW *localwin;
 	
 	
@@ -27,9 +23,11 @@ protected:
 	int temp_on_graph = 0;
 	
 	
+	
+public:
 	const static int window_graph_max_y = 23;
 	const static int window_graph_max_x = 4;
-public:
+
 	int window_master_max_y = 0;
 	int window_master_max_x = 0;
 	int window_graph_x = 0;
@@ -42,9 +40,9 @@ public:
 	void show_window_master_frame();
 	void get_number_of_t_sensors(int);
 	void choose_sensor();
-	void create_graph();
-	void show_graph_border();
-	void destroy_graph();
+	//void create_graph(int);
+	//void show_graph_border();
+	//void destroy_graph();
 	
 };
 

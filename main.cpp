@@ -6,63 +6,142 @@
 #include "window.h"
 #include "sens.h"
 
-int how_many_graphs_on_screen(window &win_m, sens *t_sens, int n_of_pages, int actual_page){
-	int size = 0;
-	int pages = 0;
-	int graphs_on_screen = 0;
+void show_all_graphs(window &win_m, sens *t_sens, int n_of_t_sens, int *graphs_on_pages, int pages, int actual_page){
+	int graphs_done = 0;
+	bool exit = false;
+	//int actual_page = 0;
 	win_m.get_window_master_size();
-	for(int i = actual_page; i < n_of_pages; i++){
-		if(t_sens[i].space_for_graph + size < win_m.window_master_max_x){
-			size += t_sens[i].space_for_graph;
-			graphs_on_screen++;
-		}			
-		else
-			break;
+	for(int i = 0; i < actual_page; i++){
+		graphs_done += graphs_on_pages[i];
 	}
-	return graphs_on_screen;
+	int j = 1;
+	for(int i = graphs_done; i < graphs_done + graphs_on_pages[actual_page]; i++){
+		t_sens[i].get_window_master_size();
+		t_sens[i].create_graph(win_m.window_master_max_x/(graphs_on_pages[actual_page]+1)*j - win_m.window_graph_max_x/2 + 1);
+		t_sens[i].show_label();
+		t_sens[i].show_graph_border();
+		j++;
+	}
+	win_m.show_window_master_frame();
+	while(exit == false){
+		
+		//clear();
+		
+		for(int i = graphs_done; i < graphs_done + graphs_on_pages[actual_page]; i++){
+			t_sens[i].show_graph_border();
+		}
+		
+		for(int i = graphs_done; i < graphs_done + graphs_on_pages[actual_page]; i++){
+			t_sens[i].refresh_value();			
+			
+		}
+		for(int i = graphs_done; i < graphs_done + graphs_on_pages[actual_page]; i++){
+			t_sens[i].refresh_graph();
+		}
+			
+			
+		for(int i = graphs_done; i < graphs_done + graphs_on_pages[actual_page]; i++){
+			t_sens[i].show_temp();
+		}
+		
+		for(int i = graphs_done; i < graphs_done + graphs_on_pages[actual_page]; i++){
+			wnoutrefresh(t_sens[i].localwin);
+			
+		}
+		refresh();
+		
+		
+		timeout(500);
+		getch();
+		nodelay(stdscr, 0);
+	}
+	
 }
 
-int how_many_pages(window &win_m, sens *t_sens, int n_of_t_sens, int &free_space){
+void get_number_of_graphs_on_pages(window &win_m, sens *t_sens, int n_of_t_sens, int * graphs_on_pages, int pages){
+	int graphs_done = 0;
 	int size = 0;
-	int pages = 0;
 	win_m.get_window_master_size();
-	for(int i = 0; i < n_of_t_sens; i++){
-		if(t_sens[i].space_for_graph + size < win_m.window_master_max_x)
-			size += t_sens[i].space_for_graph;
-		else
-		{
-			pages++;
-			size = 0;
-			i--;
+	int i = 0;
+	int j = 0;
+	
+
+	  
+	for(int k = 0; k < n_of_t_sens; k++){
+		if(t_sens[i].space_for_graph > win_m.window_master_max_x){
+			return;
+			mvprintw(1,1,"Terminal too small");
+			refresh();
+			getch();
 		}
 	}
 	
+	do{
+					
+		if(t_sens[i].space_for_graph + size < win_m.window_master_max_x){
+			size += t_sens[i].space_for_graph;
+			graphs_done++;
+			i++;
+			
+		}
+		else{
+			size = 0;
+			graphs_on_pages[j] = graphs_done;
+			j++;
+			graphs_done = 0;
+		}
+	}while(j < pages);
+}
+
+int get_number_of_pages(window &win_m, sens *t_sens, int n_of_t_sens){
+	
+	int graphs_left = n_of_t_sens;
+	int size = 0;
+	int pages = 1;
+	int i = 0;
+	win_m.get_window_master_size();
+	while(i < n_of_t_sens){
+		if(t_sens[i].space_for_graph + size < win_m.window_master_max_x){
+			size += t_sens[i].space_for_graph;
+			i++;
+		}
+		else{
+			pages++;
+			size = 0;
+			
+			
+		}
+	}
+		
 	return pages;
 }
 
 void all_graphs_screen(window &win_m, sens *t_sens, int n_of_t_sens, bool &exit_program){
 	clear();
+	
 	bool exit = false;
+	int graphs_done = 0;
 	int free_space = 0;
 	int actual_graph = 0;
 	int actual_page = 0;
-	int pages = how_many_pages(win_m, t_sens, n_of_t_sens, free_space);
-	int graphs_on_screen = how_many_graphs_on_screen(win_m, t_sens, n_of_t_sens, 0);
-	
-	
-	for(int i  = 0; i <= pages; i++){
-		clear();
-		mvprintw(1 , 1, "ALL PAGES: %d", pages);
-		graphs_on_screen = how_many_graphs_on_screen(win_m, t_sens, n_of_t_sens, i);
-		mvprintw(2 , 1, "actual page: %d", i);
-		mvprintw(3 , 1, "graphs: %d", graphs_on_screen);
-		refresh();
-		getch();		
+	int pages = get_number_of_pages(win_m, t_sens, n_of_t_sens);
+	int *graphs_on_pages = new int [pages];
+	get_number_of_graphs_on_pages(win_m, t_sens, n_of_t_sens, graphs_on_pages, pages);
+	/*printw("PAGES: %d \n", pages);
+	for(int k = 0; k < pages; k++){
+		printw("GRAPHS: %d \n", graphs_on_pages[k]);
+		printw("PAGE: %d \n", k);
+
 		
-	}
+	}*/
+	show_all_graphs(win_m, t_sens, n_of_t_sens, graphs_on_pages, pages, actual_page);
+	graphs_done = 0;
+			
+	
 	refresh();
 	getch();
-		
+	
+	
 	
 	
 }
@@ -105,7 +184,7 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program
 	
 	graph[win_m.choosed_option].get_window_master_size();
 	win_m.show_window_master_frame();
-	graph[win_m.choosed_option].create_graph();
+	graph[win_m.choosed_option].create_graph(win_m.window_master_max_x/2 - win_m.window_graph_max_x/2);
 	graph[win_m.choosed_option].show_label();	
 	graph[win_m.choosed_option].show_graph_border();
 	mvprintw(1,1,"Press h for help");
@@ -116,6 +195,7 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program
 		graph[win_m.choosed_option].refresh_value();
 		graph[win_m.choosed_option].refresh_graph();
 		graph[win_m.choosed_option].show_temp();
+		wnoutrefresh(graph[win_m.choosed_option].localwin);
 		
 		timeout(100);
 		c = wgetch(stdscr);
@@ -124,12 +204,14 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program
 			case 'Q':
 			case 'q':
 				exit_program = true;
+				graph[win_m.choosed_option].destroy_graph();
 				return;
 				break;
 				
 			case 27:
 				exit = true;
 				graph[win_m.choosed_option].hide_temp();
+				graph[win_m.choosed_option].destroy_graph();
 				clear();
 				break;
 				
@@ -137,6 +219,7 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program
 			case 'H':
 				exit = true;
 				help(win_m, exit_program);
+				graph[win_m.choosed_option].destroy_graph();
 				break;
 		}
 	}

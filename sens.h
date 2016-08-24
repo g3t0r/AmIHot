@@ -4,7 +4,7 @@
 #include "window.h"
 
 class sens :public window{
-	WINDOW *localwon;
+	
 	
 	sensors_chip_name const *chip_name;
 	sensors_feature const *feature_name;
@@ -16,6 +16,7 @@ class sens :public window{
 	
 	
 public:
+WINDOW *localwin;
 	
 	bool temperature_sens = false;
 	bool fan_sens = false;
@@ -26,6 +27,9 @@ public:
 	void refresh_value();
 	void refresh_graph();
 	void test();
+	void create_graph(int);
+	void show_graph_border();
+	void destroy_graph();
 	void show_temp();
 	void hide_temp();
 	void show_label();
