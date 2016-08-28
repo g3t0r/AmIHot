@@ -11,7 +11,7 @@ void sens::get_sens_patametrs(sensors_chip_name const *cn, sensors_feature const
 	feature_number = f;
 	name = ft->name;
 	label = sensors_get_label(cn, ft);
-	space_for_graph = strlen(label) + 1;
+	space_for_graph = strlen(label) + 5;
 }
 
 void sens::refresh_value(){

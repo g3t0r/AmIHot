@@ -16,8 +16,7 @@ protected:
 	WINDOW *localwin;
 	
 	
-	int window_graph_start_y = 0;
-	int window_graph_start_x = 0;
+	
 	
 	int temp = 0;
 	int temp_on_graph = 0;
@@ -27,6 +26,9 @@ protected:
 public:
 	const static int window_graph_max_y = 23;
 	const static int window_graph_max_x = 4;
+	
+	int window_graph_start_y = 0;
+	int window_graph_start_x = 0;
 
 	int window_master_max_y = 0;
 	int window_master_max_x = 0;
@@ -43,6 +45,7 @@ public:
 	//void create_graph(int);
 	//void show_graph_border();
 	//void destroy_graph();
+	
 	
 };
 
