@@ -11,3 +11,5 @@ uninstall:
 
 clean:
 	rm ./amihot
+
+reinstall: uninstall install
