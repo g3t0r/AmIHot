@@ -3,21 +3,18 @@
 #include <time.h>
 #include "window.h"
 
-class sens :public window{
-	
+class sens :public window{	
 	
 	sensors_chip_name const *chip_name;
 	sensors_feature const *feature_name;
 	int chip_number = 0;
-	int feature_number = 0;
-	
+	int feature_number = 0;	
 	double value = 0;
-	char *name;
-	
+	char *name;	
 	
 public:
-WINDOW *localwin;
-	
+
+	WINDOW *localwin;	
 	bool temperature_sens = false;
 	bool fan_sens = false;
 	char *label;

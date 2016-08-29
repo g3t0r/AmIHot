@@ -8,20 +8,13 @@
 
 class window{
 		
-	int number_of_t_sensors = 0;
-	
+	int number_of_t_sensors = 0;	
 	
 protected:
 
-	WINDOW *localwin;
-	
-	
-	
-	
+	WINDOW *localwin;	
 	int temp = 0;
-	int temp_on_graph = 0;
-	
-	
+	int temp_on_graph = 0;	
 	
 public:
 	const static int window_graph_max_y = 23;
@@ -41,15 +34,7 @@ public:
 	void get_window_master_size();
 	void show_window_master_frame();
 	void get_number_of_t_sensors(int);
-	void choose_sensor();
-	//void create_graph(int);
-	//void show_graph_border();
-	//void destroy_graph();
-	
-	
+	void choose_sensor();	
 };
-
-
-
 
 #endif WINDOW_H

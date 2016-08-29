@@ -68,10 +68,7 @@ void sens::create_graph(int x){
 void sens::show_graph_border(){
 	wclear(localwin);
 	wattron(localwin ,COLOR_PAIR(1));
-	box(localwin, 0, 0);
-	//refresh();
-	//wrefresh(localwin);
-	//refresh();
+	box(localwin, 0, 0);	
 }
 
 void sens::refresh_graph(){
@@ -95,19 +92,14 @@ void sens::refresh_graph(){
 			wattron(localwin, COLOR_PAIR(4));
 			mvwaddch(localwin, window_graph_max_y -1 - i, 1, ACS_CKBOARD);
 			mvwaddch(localwin, window_graph_max_y -1 - i, 2, ACS_CKBOARD);
-			wattroff(localwin, COLOR_PAIR(4));
-			
-			
+			wattroff(localwin, COLOR_PAIR(4));			
 		}
 	}
-	//wrefresh(localwin);
-			//refresh();
 }
 
 void sens::show_temp(){
 	mvprintw(window_graph_start_y + window_graph_max_y, window_graph_x, "%d%cC", temp, 42);
-	//wrefresh(localwin);
-	//refresh();
+	
 }
 
 void sens::hide_temp(){

@@ -37,7 +37,7 @@ void show_all_graphs(window &win_m, sens *t_sens, int n_of_t_sens, int *graphs_o
 	int graphs_done = 0;
 	signal = NULL;
 	bool exit = false;
-	//int actual_page = 0;
+	
 	win_m.get_window_master_size();
 	for(int i = 0; i < actual_page; i++){
 		graphs_done += graphs_on_pages[i];
@@ -46,6 +46,7 @@ void show_all_graphs(window &win_m, sens *t_sens, int n_of_t_sens, int *graphs_o
 	show_left_arrows(win_m, pages, actual_page);
 	show_right_arrows(win_m, pages, actual_page);
 	refresh();
+	
 	int j = 1;
 	int k = graphs_on_pages[actual_page];
 	for(int i = graphs_done; i < graphs_done + graphs_on_pages[actual_page]; i++){
@@ -60,8 +61,6 @@ void show_all_graphs(window &win_m, sens *t_sens, int n_of_t_sens, int *graphs_o
 	mvprintw(1,1,"Press h for help");
 	
 	while(exit == false){
-		
-		//clear();
 		
 		for(int i = graphs_done; i < graphs_done + graphs_on_pages[actual_page]; i++){
 			t_sens[i].show_graph_border();
@@ -87,14 +86,14 @@ void show_all_graphs(window &win_m, sens *t_sens, int n_of_t_sens, int *graphs_o
 		
 		
 		timeout(500);
-		//signal = wgetch(stdscr);
+		
 		switch(wgetch(stdscr)){
 			case 'q':
 			case 'Q':
 				for(int i = graphs_done; i < graphs_done + graphs_on_pages[actual_page]; i++)
 					t_sens[i].destroy_graph();
-					signal = 'q';
-				
+					
+				signal = 'q';
 				clear();
 				return;
 				
@@ -106,11 +105,12 @@ void show_all_graphs(window &win_m, sens *t_sens, int n_of_t_sens, int *graphs_o
 					actual_page--;
 					return;
 				}
+				
 				else
 					break;
 					
-			case KEY_RIGHT:
-				
+					
+			case KEY_RIGHT:				
 				if(actual_page < pages -1){
 					for(int i = graphs_done; i < graphs_done + graphs_on_pages[actual_page]; i++)
 						t_sens[i].destroy_graph();
@@ -131,6 +131,7 @@ void show_all_graphs(window &win_m, sens *t_sens, int n_of_t_sens, int *graphs_o
 			case 'h':
 				for(int i = graphs_done; i < graphs_done + graphs_on_pages[actual_page]; i++)
 					t_sens[i].destroy_graph();
+					
 				signal = 'h';
 				return;
 		}
@@ -212,13 +213,7 @@ void all_graphs_screen(window &win_m, sens *t_sens, int n_of_t_sens, bool &exit_
 	int *graphs_on_pages = new int [pages];
 	char signal;
 	get_number_of_graphs_on_pages(win_m, t_sens, n_of_t_sens, graphs_on_pages, pages);
-	/*printw("PAGES: %d \n", pages);
-	for(int k = 0; k < pages; k++){
-		printw("GRAPHS: %d \n", graphs_on_pages[k]);
-		printw("PAGE: %d \n", k);
-
-		
-	}*/
+	
 	while(true){
 		show_all_graphs(win_m, t_sens, n_of_t_sens, graphs_on_pages, pages, actual_page, signal);
 		graphs_done = 0;
@@ -251,7 +246,7 @@ void all_graphs_screen(window &win_m, sens *t_sens, int n_of_t_sens, bool &exit_
 void help(window &win_m, bool &exit_program){
 	
 	char help_text[18][100] = {
-		{"AmIHot v0.01 created by g3t0r (i.never.sleep@op.pl)"},
+		{"AmIHot v0.02 created by g3t0r (i.never.sleep@op.pl)"},
 		{},
 		{"Use"},
 		{"Arrows to move"},
@@ -272,15 +267,12 @@ void help(window &win_m, bool &exit_program){
 	};
 	
 	clear();
-	nodelay(stdscr, 0);
-	
-	
+	nodelay(stdscr, 0);	
 		
 	for(int i = 0; i < 18; i++)
 		mvprintw(7+i, win_m.window_master_max_x/2 - strlen(help_text[i])/2, "%s", help_text[i]);
 		
-	refresh();
-	
+	refresh();	
 	
 	switch(wgetch(stdscr)){
 		case 'Q':
@@ -291,8 +283,6 @@ void help(window &win_m, bool &exit_program){
 	}
 	clear();
 	win_m.show_window_master_frame();
-	
-	
 	
 }
 
@@ -481,8 +471,7 @@ int main(){
 		all_sens[i].get_sens_type();
 		if(all_sens[i].temperature_sens == true){
 			number_of_t_sens++ ;
-		}
-			
+		}			
 	}
 	
 	sens *temp_sens = new sens [number_of_t_sens];
@@ -490,17 +479,12 @@ int main(){
 	for(i = 0; i < number_of_features; i++){
 		if(all_sens[i].temperature_sens == true){
 			temp_sens[j] = all_sens[i];
-			j++ ;
-			
-			
+			j++ ;			
 		}
 	}
-		
 			
 	main_loop(temp_sens, number_of_t_sens);
-	endwin();
-	
-	
+	endwin();	
 	
 	return 0;
 }

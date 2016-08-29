@@ -19,23 +19,3 @@ void window::show_window_master_frame(){
 void window::get_number_of_t_sensors(int n){
 	number_of_t_sensors = n;
 }
-
-/*void window::create_graph(int x){
-	
-	window_graph_x = x;
-	localwin = newwin(window_graph_max_y, window_graph_max_x,
-	window_graph_start_y, x);
-}*/
-
-/*void window::show_graph_border(){
-	wclear(localwin);
-	wattron(localwin ,COLOR_PAIR(1));
-	box(localwin, 0, 0);
-	refresh();
-	wrefresh(localwin);
-	refresh();
-}
-
-void window::destroy_graph(){
-	delwin(localwin);
-}*/
