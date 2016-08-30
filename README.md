@@ -16,11 +16,11 @@ You can easly upgrade it to the newest version by entering in terminal "make" an
 
 # Errors and bugs
 If program can't detect sensors try to run sensors-detect as root
-
-<p align="center"> ![alt tag](http://i.imgur.com/0xHh6jt.png)</p>
+<p align="center">
+ ![alt tag](http://i.imgur.com/0xHh6jt.png)
 
 #### My "CPU Temperature" sensor is damaged, it's not program's bug 
-<p align="center"> ![alt tag](http://i.imgur.com/yoUkzFu.png)</p>
+<p align="center"> ![alt tag](http://i.imgur.com/yoUkzFu.png)
 
-<p align="center"> ![alt tag](http://i.imgur.com/raYbjTd.png)</p>
+<p align="center"> ![alt tag](http://i.imgur.com/raYbjTd.png)
 
