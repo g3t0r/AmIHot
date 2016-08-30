@@ -9,7 +9,7 @@ This is a program to monitor the temperature of the PC and display it to the bar
  
 # How to install:
 Enter "make" in terminal to compile
-Enter "make install" as root to link compiled file into /usr/bin/
+Enter "make install" as root to copy compiled file into /usr/bin/
 
 # Upgrading from older version
 You can easly upgrade it to the newest version by entering in terminal "make" and then as root "make reinstall"
