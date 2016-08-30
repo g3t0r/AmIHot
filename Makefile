@@ -4,7 +4,7 @@ all:
 	
 
 install:
-	ln -s ${PWD}/amihot /usr/bin/amihot
+	cp ${PWD}/amihot /usr/bin/
 
 uninstall:
 	rm /usr/bin/amihot
