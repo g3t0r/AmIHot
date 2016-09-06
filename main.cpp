@@ -431,6 +431,7 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 				case 'A':
 					exit = true;
 					all_graphs_screen(win_master, t_sens, n_of_t_sens, exit_program);
+					break;
 					
 				case KEY_RESIZE:
 					main_loop(t_sens, n_of_t_sens);
@@ -491,6 +492,7 @@ int main(){
 			number_of_t_sens++ ;
 		}			
 	}
+	const int n_of_t_sens = number_of_t_sens;
 	
 	sens *temp_sens = new sens [number_of_t_sens];
 	
@@ -501,7 +503,7 @@ int main(){
 		}
 	}
 			
-	main_loop(temp_sens, number_of_t_sens);
+	main_loop(temp_sens, n_of_t_sens);
 	endwin();	
 	
 	return 0;
