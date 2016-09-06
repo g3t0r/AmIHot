@@ -246,7 +246,7 @@ void all_graphs_screen(window &win_m, sens *t_sens, int n_of_t_sens, bool &exit_
 void help(window &win_m, bool &exit_program){
 	
 	char help_text[18][100] = {
-		{"AmIHot v0.02 created by g3t0r (i.never.sleep@op.pl)"},
+		{"AmIHot v0.02 created by g3t0r (g3t0r@op.pl)"},
 		{},
 		{"Use"},
 		{"Arrows to move"},
@@ -258,7 +258,7 @@ void help(window &win_m, bool &exit_program){
 		{"No sensors detected?"},
 		{"Try to run \"sensors-detect\" as root"},
 		{},
-		{"All bugs and errors please report on my email(i.never.sleep@op.pl)"},
+		{"All bugs and errors please report on my email(g3t0r@op.pl)"},
 		{},
 		{"Updates will be published on my github profile(https://github.com/g3t0r)"},
 		{},
