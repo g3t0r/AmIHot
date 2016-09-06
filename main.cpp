@@ -61,7 +61,7 @@ void show_all_graphs(window &win_m, sens *t_sens, int n_of_t_sens, int *graphs_o
 	mvprintw(1,1,"Press h for help");
 	
 	while(exit == false){
-		
+				
 		for(int i = graphs_done; i < graphs_done + graphs_on_pages[actual_page]; i++){
 			t_sens[i].show_graph_border();
 		}
@@ -133,6 +133,10 @@ void show_all_graphs(window &win_m, sens *t_sens, int n_of_t_sens, int *graphs_o
 					t_sens[i].destroy_graph();
 					
 				signal = 'h';
+				return;
+				
+			case KEY_RESIZE:
+				show_all_graphs(win_m, t_sens, n_of_t_sens, graphs_on_pages, pages, actual_page, signal);
 				return;
 		}
 				
@@ -268,7 +272,7 @@ void help(window &win_m, bool &exit_program){
 	
 	clear();
 	nodelay(stdscr, 0);	
-		
+	win_m.get_window_master_size();	
 	for(int i = 0; i < 18; i++)
 		mvprintw(7+i, win_m.window_master_max_x/2 - strlen(help_text[i])/2, "%s", help_text[i]);
 		
@@ -280,6 +284,11 @@ void help(window &win_m, bool &exit_program){
 			exit_program = true;
 			return;
 			break;
+		
+		case KEY_RESIZE:
+			help(win_m, exit_program);
+			return;
+			
 	}
 	clear();
 	win_m.show_window_master_frame();
@@ -291,8 +300,9 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program
 	char c;
 	bool exit = false;
 	
-	graph[win_m.choosed_option].get_window_master_size();
+	win_m.get_window_master_size();
 	win_m.show_window_master_frame();
+	graph[win_m.choosed_option].get_window_master_size();
 	graph[win_m.choosed_option].create_graph(win_m.window_master_max_x/2 - win_m.window_graph_max_x/2);
 	graph[win_m.choosed_option].show_label();	
 	graph[win_m.choosed_option].show_graph_border();
@@ -307,10 +317,9 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program
 		graph[win_m.choosed_option].show_temp();
 		wnoutrefresh(graph[win_m.choosed_option].localwin);
 		
-		timeout(100);
-		c = wgetch(stdscr);
+		timeout(100);		
 		nodelay(stdscr, 0);
-		switch(c){
+		switch(wgetch(stdscr)){
 			case 'Q':
 			case 'q':
 				exit_program = true;
@@ -336,6 +345,10 @@ void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program
 			case 'a':
 				all_graphs_screen(win_m, graph, n_of_graph, exit_program);
 				return;
+				
+			case KEY_RESIZE:
+				graph_screen(graph, n_of_graph, win_m, exit_program);
+				return;
 		}
 	}
 }
@@ -360,6 +373,7 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 	bool exit_program = false;
 	bool exit = false;
 	
+	clear();
 	window win_master;
 	win_master.get_number_of_t_sensors(n_of_t_sens);
 	attron(COLOR_PAIR(1));
@@ -417,6 +431,10 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 				case 'A':
 					exit = true;
 					all_graphs_screen(win_master, t_sens, n_of_t_sens, exit_program);
+					
+				case KEY_RESIZE:
+					main_loop(t_sens, n_of_t_sens);
+					return;
 				
 
 			}
