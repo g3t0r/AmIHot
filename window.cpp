@@ -15,7 +15,3 @@ void window::show_window_master_frame(){
 	mvwprintw(stdscr, 0, window_master_max_x / 2 - sizeof(" AmIHot v0.02 ")/2 , " AmIHot v0.02 ");
 	wrefresh(stdscr);
 }
-
-void window::get_number_of_t_sensors(int n){
-	number_of_t_sensors = n;
-}

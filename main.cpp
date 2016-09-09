@@ -6,6 +6,8 @@
 #include "window.h"
 #include "sens.h"
 
+
+
 int get_number_of_pages(window &win_m, sens *t_sens, int n_of_t_sens);
 void show_left_arrows(window &win_m, int pages, int actual_page);
 void show_right_arrows(window &win_m, int pages, int actual_page);
@@ -16,6 +18,7 @@ void help(window &win_m, bool &exit_program);
 void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program);
 void choose_sensor(sens *t_sens, int n_of_t_sens, window &win_m, bool &exit_program);
 void main_loop(sens *t_sens, int n_of_t_sens);
+
 
 void show_left_arrows(window &win_m, int pages, int actual_page){
 	if(actual_page > 0){
@@ -32,11 +35,13 @@ void show_right_arrows(window &win_m, int pages, int actual_page){
 	}
 }
 
-void show_all_graphs(window &win_m, sens *t_sens, int n_of_t_sens, int *graphs_on_pages, int pages, int &actual_page, char &signal){
+void show_all_graphs(window &win_m, sens *t_sens, int n_of_t_sens, int *graphs_on_pages, int pages, int &actual_page, char &signal, bool &exit_program){
 	clear();
 	int graphs_done = 0;
 	signal = NULL;
 	bool exit = false;
+	
+	
 	
 	win_m.get_window_master_size();
 	for(int i = 0; i < actual_page; i++){
@@ -85,7 +90,7 @@ void show_all_graphs(window &win_m, sens *t_sens, int n_of_t_sens, int *graphs_o
 		refresh();
 		
 		
-		timeout(500);
+		timeout(100);
 		
 		switch(wgetch(stdscr)){
 			case 'q':
@@ -136,7 +141,13 @@ void show_all_graphs(window &win_m, sens *t_sens, int n_of_t_sens, int *graphs_o
 				return;
 				
 			case KEY_RESIZE:
-				show_all_graphs(win_m, t_sens, n_of_t_sens, graphs_on_pages, pages, actual_page, signal);
+				for(int i = graphs_done; i < graphs_done + graphs_on_pages[actual_page]; i++)
+					t_sens[i].destroy_graph();
+					
+					//all_graphs_screen(win_m, t_sens, n_of_t_sens, exit_program);
+
+					signal = 'r';
+					clear();
 				return;
 		}
 				
@@ -148,14 +159,20 @@ void show_all_graphs(window &win_m, sens *t_sens, int n_of_t_sens, int *graphs_o
 }
 
 void get_number_of_graphs_on_pages(window &win_m, sens *t_sens, int n_of_t_sens, int * graphs_on_pages, int pages){
+
 	int graphs_done = 0;
 	int size = 0;
 	win_m.get_window_master_size();
 	int i = 0;
 	int j = 0;
-	
+	for(int a = 0; a < pages; a++)
+		graphs_on_pages[a] = 0;
 
-	  
+	win_m.get_window_master_size();
+	if(pages == 1){
+		graphs_on_pages[0] = n_of_t_sens;
+		return;
+	}
 	for(int k = 0; k < n_of_t_sens; k++){
 		if(t_sens[i].space_for_graph > win_m.window_master_max_x){
 			return;
@@ -173,6 +190,7 @@ void get_number_of_graphs_on_pages(window &win_m, sens *t_sens, int n_of_t_sens,
 			i++;
 			
 		}
+		
 		else{
 			size = 0;
 			graphs_on_pages[j] = graphs_done;
@@ -184,12 +202,14 @@ void get_number_of_graphs_on_pages(window &win_m, sens *t_sens, int n_of_t_sens,
 
 int get_number_of_pages(window &win_m, sens *t_sens, int n_of_t_sens){
 	
-	int graphs_left = n_of_t_sens;
+	int graphs_left = 0;
+	graphs_left = n_of_t_sens;
 	int size = 0;
 	int pages = 1;
 	int i = 0;
 	win_m.get_window_master_size();
 	while(i < n_of_t_sens){
+		win_m.get_window_master_size();
 		if(t_sens[i].space_for_graph + size < win_m.window_master_max_x){
 			size += t_sens[i].space_for_graph;
 			i++;
@@ -197,8 +217,6 @@ int get_number_of_pages(window &win_m, sens *t_sens, int n_of_t_sens){
 		else{
 			pages++;
 			size = 0;
-			
-			
 		}
 	}
 		
@@ -206,6 +224,7 @@ int get_number_of_pages(window &win_m, sens *t_sens, int n_of_t_sens){
 }
 
 void all_graphs_screen(window &win_m, sens *t_sens, int n_of_t_sens, bool &exit_program){
+	win_m.get_window_master_size();
 	clear();
 	
 	bool exit = false;
@@ -213,20 +232,22 @@ void all_graphs_screen(window &win_m, sens *t_sens, int n_of_t_sens, bool &exit_
 	int free_space = 0;
 	int actual_graph = 0;
 	int actual_page = 0;
-	int pages = get_number_of_pages(win_m, t_sens, n_of_t_sens);
+	int pages = 0;
+	pages = get_number_of_pages(win_m, t_sens, n_of_t_sens);
 	int *graphs_on_pages = new int [pages];
-	char signal;
+		
+	char signal = NULL;
 	get_number_of_graphs_on_pages(win_m, t_sens, n_of_t_sens, graphs_on_pages, pages);
-	
+		
 	while(true){
-		show_all_graphs(win_m, t_sens, n_of_t_sens, graphs_on_pages, pages, actual_page, signal);
+		show_all_graphs(win_m, t_sens, n_of_t_sens, graphs_on_pages, pages, actual_page, signal, exit_program);
 		graphs_done = 0;
 		switch(signal){
 			case 'q':
 			case 'Q':
 				exit_program = true;
 				return;
-			
+				
 			case 27:
 				clear();
 				return;
@@ -234,17 +255,12 @@ void all_graphs_screen(window &win_m, sens *t_sens, int n_of_t_sens, bool &exit_
 			case 'h':
 				help(win_m, exit_program);
 				return;
+				
+			case 'r':
+				all_graphs_screen(win_m, t_sens, n_of_t_sens, exit_program);
+				return;
 		}
 	}
-	
-			
-	
-	refresh();
-	getch();
-	
-	
-	
-	
 }
 
 void help(window &win_m, bool &exit_program){
@@ -276,7 +292,7 @@ void help(window &win_m, bool &exit_program){
 	for(int i = 0; i < 18; i++)
 		mvprintw(7+i, win_m.window_master_max_x/2 - strlen(help_text[i])/2, "%s", help_text[i]);
 		
-	refresh();	
+	refresh();
 	
 	switch(wgetch(stdscr)){
 		case 'Q':
@@ -375,7 +391,7 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 	
 	clear();
 	window win_master;
-	win_master.get_number_of_t_sensors(n_of_t_sens);
+	
 	attron(COLOR_PAIR(1));
 	win_master.get_window_master_size();
 	
@@ -422,7 +438,7 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 					
 				case 'h':
 				case 'H':
-					exit = true;					
+					exit = true;
 					clear();
 					help(win_master, exit_program);
 					break;
@@ -436,8 +452,6 @@ void main_loop(sens *t_sens, int n_of_t_sens){
 				case KEY_RESIZE:
 					main_loop(t_sens, n_of_t_sens);
 					return;
-				
-
 			}
 		}
 	}
@@ -464,7 +478,7 @@ int main(){
 	sensors_feature const *feature;
 	int c = 0;
 	int number_of_features = 0;
-	int number_of_t_sens = 0;
+	int n_of_t_sens = 0;
 	int i = 0;
 	int j = 0;
 	
@@ -489,23 +503,20 @@ int main(){
 	for(i = 0; i < number_of_features; i++){
 		all_sens[i].get_sens_type();
 		if(all_sens[i].temperature_sens == true){
-			number_of_t_sens++ ;
+			n_of_t_sens++ ;
 		}			
 	}
-	const int n_of_t_sens = number_of_t_sens;
 	
-	sens *temp_sens = new sens [number_of_t_sens];
+	sens *temp_sens = new sens [n_of_t_sens];
 	
 	for(i = 0; i < number_of_features; i++){
 		if(all_sens[i].temperature_sens == true){
 			temp_sens[j] = all_sens[i];
 			j++ ;			
 		}
-	}
-			
+	}	
+		
 	main_loop(temp_sens, n_of_t_sens);
 	endwin();	
-	
 	return 0;
 }
-
