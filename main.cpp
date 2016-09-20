@@ -176,9 +176,7 @@ void get_number_of_graphs_on_pages(window &win_m, sens *t_sens, int n_of_t_sens,
 	for(int k = 0; k < n_of_t_sens; k++){
 		if(t_sens[i].space_for_graph > win_m.window_master_max_x){
 			return;
-			mvprintw(1,1,"Terminal too small");
-			refresh();
-			getch();
+			
 		}
 	}
 	
