@@ -54,6 +54,9 @@ void show_all_graphs(window &win_m, sens *t_sens, int n_of_t_sens, int *graphs_o
 	
 	int j = 1;
 	int k = graphs_on_pages[actual_page];
+	
+	
+		
 	for(int i = graphs_done; i < graphs_done + graphs_on_pages[actual_page]; i++){
 		
 		t_sens[i].get_window_master_size();
@@ -231,15 +234,15 @@ void all_graphs_screen(window &win_m, sens *t_sens, int n_of_t_sens, bool &exit_
 	int actual_graph = 0;
 	int actual_page = 0;
 	int pages = 0;
+	char signal = NULL;
 	pages = get_number_of_pages(win_m, t_sens, n_of_t_sens);
 	int *graphs_on_pages = new int [pages];
 		
-	char signal = NULL;
+	
 	get_number_of_graphs_on_pages(win_m, t_sens, n_of_t_sens, graphs_on_pages, pages);
 		
 	while(true){
-		show_all_graphs(win_m, t_sens, n_of_t_sens, graphs_on_pages, pages, actual_page, signal, exit_program);
-		graphs_done = 0;
+		
 		switch(signal){
 			case 'q':
 			case 'Q':
@@ -258,6 +261,9 @@ void all_graphs_screen(window &win_m, sens *t_sens, int n_of_t_sens, bool &exit_
 				all_graphs_screen(win_m, t_sens, n_of_t_sens, exit_program);
 				return;
 		}
+		
+		show_all_graphs(win_m, t_sens, n_of_t_sens, graphs_on_pages, pages, actual_page, signal, exit_program);
+		graphs_done = 0;
 	}
 }
 
@@ -311,7 +317,7 @@ void help(window &win_m, bool &exit_program){
 
 void graph_screen(sens *graph, int n_of_graph, window &win_m, bool &exit_program){
 	clear();
-	char c;
+	char c = NULL;
 	bool exit = false;
 	
 	win_m.get_window_master_size();
