@@ -77,22 +77,22 @@ void sens::refresh_graph(){
 		 
 		if(i > 0 ){
 			wattron(localwin, COLOR_PAIR(2));
-			mvwaddch(localwin, window_graph_max_y -1 - i, 1, ACS_CKBOARD);
-			mvwaddch(localwin, window_graph_max_y -1 - i, 2, ACS_CKBOARD);
+			mvwaddch(localwin, window_graph_max_y -1 - i, 1, '*');
+			mvwaddch(localwin, window_graph_max_y -1 - i, 2, '*');
 			wattroff(localwin ,COLOR_PAIR(2));			
 		}
 		
 		if(i >= 10 && i < 18){
 			wattron( localwin, COLOR_PAIR(3));
-			mvwaddch(localwin, window_graph_max_y -1 - i, 1, ACS_CKBOARD);
-			mvwaddch(localwin, window_graph_max_y -1 - i, 2, ACS_CKBOARD);
+			mvwaddch(localwin, window_graph_max_y -1 - i, 1, '*');
+			mvwaddch(localwin, window_graph_max_y -1 - i, 2, '*');
 			wattroff(localwin, COLOR_PAIR(3));
 		}
 		
 		if(i >= 18){
 			wattron(localwin, COLOR_PAIR(4));
-			mvwaddch(localwin, window_graph_max_y -1 - i, 1, ACS_CKBOARD);
-			mvwaddch(localwin, window_graph_max_y -1 - i, 2, ACS_CKBOARD);
+			mvwaddch(localwin, window_graph_max_y -1 - i, 1, '*');
+			mvwaddch(localwin, window_graph_max_y -1 - i, 2, '*');
 			wattroff(localwin, COLOR_PAIR(4));			
 		}
 	}

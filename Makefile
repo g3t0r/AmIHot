@@ -1,6 +1,6 @@
 
 all:
-	g++ main.cpp window.cpp window.h  sens.cpp sens.h  -o amihot -lsensors -lncurses -w
+	g++ main.cpp window.cpp window.h  sens.cpp sens.h  -o amihot -lsensors -lcurses -w
 	
 
 install:
