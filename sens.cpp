@@ -75,24 +75,24 @@ void sens::show_graph_border(){
 void sens::refresh_graph(){
 	for(int i = 0; i < temp_on_graph; i++){
 		 
-		if(i > 0 ){
+		if(i > 0 && i < 10){
 			wattron(localwin, COLOR_PAIR(2));
-			mvwaddch(localwin, window_graph_max_y -1 - i, 1, '*');
-			mvwaddch(localwin, window_graph_max_y -1 - i, 2, '*');
+			mvwaddch(localwin, window_graph_max_y -1 - i, 1, '#');
+			mvwaddch(localwin, window_graph_max_y -1 - i, 2, '#');
 			wattroff(localwin ,COLOR_PAIR(2));			
 		}
 		
 		if(i >= 10 && i < 18){
 			wattron( localwin, COLOR_PAIR(3));
-			mvwaddch(localwin, window_graph_max_y -1 - i, 1, '*');
-			mvwaddch(localwin, window_graph_max_y -1 - i, 2, '*');
+			mvwaddch(localwin, window_graph_max_y -1 - i, 1, '#');
+			mvwaddch(localwin, window_graph_max_y -1 - i, 2, '#');
 			wattroff(localwin, COLOR_PAIR(3));
 		}
 		
 		if(i >= 18){
 			wattron(localwin, COLOR_PAIR(4));
-			mvwaddch(localwin, window_graph_max_y -1 - i, 1, '*');
-			mvwaddch(localwin, window_graph_max_y -1 - i, 2, '*');
+			mvwaddch(localwin, window_graph_max_y + 3 - i, 1, '#');
+			mvwaddch(localwin, window_graph_max_y + 3 - i, 2, '#');
 			wattroff(localwin, COLOR_PAIR(4));			
 		}
 	}
