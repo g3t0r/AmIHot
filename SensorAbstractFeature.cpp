@@ -24,6 +24,6 @@ double SensorAbstractFeature::getValue() {
   return currentValueSubfeature.getValue();
 }
 
-std::string SensorAbstractFeature::getName() {
+char * SensorAbstractFeature::getName() {
   return sensors_get_label(chip, feature);
 }

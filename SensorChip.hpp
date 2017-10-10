@@ -4,7 +4,7 @@
 #include <string.h>
 #include <iostream>
 #include <vector>
-#include "SensorTemperatureFeature.hpp"
+#include "TempFeature.hpp"
 #include "SensorFanFeature.hpp"
 
 
@@ -16,7 +16,7 @@ class SensorChip {
   bool isFanFeature(sensors_feature const *);
 
 public:
-  std::vector < SensorTemperatureFeature > temperatureFeatures;
+  std::vector < TempFeature > temperatureFeatures;
   std::vector < SensorFanFeature > fanFeatures;
 
 

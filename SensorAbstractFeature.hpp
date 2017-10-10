@@ -14,7 +14,7 @@ public:
   SensorAbstractFeature(sensors_chip_name const *, sensors_feature const *);
   virtual bool isCurrentValueSubfeature(SensorSubfeature) = 0;
   double getValue();
-  std::string getName();
+  char * getName();
 };
 
 #endif
