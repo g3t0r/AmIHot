@@ -20,7 +20,7 @@ void SensorChip::setTempAndFanFeatures() {
   int number = 0;
   while((feature = sensors_get_features(chip, &number)) != 0) {
     if(isTempFeature(feature)) {
-      temperatureFeatures.push_back(SensorTemperatureFeature(chip, feature));
+      temperatureFeatures.push_back(TempFeature(chip, feature));
     }
     if(isFanFeature(feature)) {
       fanFeatures.push_back(SensorFanFeature(chip, feature));
