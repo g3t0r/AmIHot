@@ -28,11 +28,11 @@ void SensorChip::setTempAndFanFeatures() {
   }
 }
 
-std::string SensorChip::getName(){
+const char * SensorChip::getName(){
   return chip->prefix;
 }
 
-std::string SensorChip::getAdapterName() {
+const char * SensorChip::getAdapterName() {
   sensors_bus_id const *bus = &chip->bus;
 
   /* Definied in lm_sensors, sensors.h file:

@@ -6,14 +6,15 @@
 
 
 TempFeatureWin::TempFeatureWin(WINDOW * masterWin, TempFeature feat,
-                               int y, int widthWithBorder) {
+                               int x, int widthWithBorder) {
 
   this->widthWithBorder = widthWithBorder;
   width = widthWithBorder - 2;
   height = 25; // 23 for Graph, 1 for temperature, 1 for name
   heightWithBorder = height + 2;
-  this->y = y;
-  x = 1; //Not 0 because of border
+  this->x = x;
+  y = 1;
+  x += 1; //Not 0 because of border
   tempFeature.push_back(feat);
 
   featureWindow = derwin(masterWin, heightWithBorder,
@@ -55,9 +56,14 @@ void TempFeatureWin::refreshGraphWindow() {
 }
 
 void TempFeatureWin::refreshTemp() {
+  int tempStartX = width/2 -1;
+  int tempLength = 1;
+  int temp = (int)tempFeature[0].getValue();
+  if(temp > 9 && temp < 100) tempLength = 2;
+  if(temp >= 100) tempLength = 3;
 
-  mvwprintw(featureWindow, height , width/2 -1, "%d",
-            (int)tempFeature[0].getValue());
-  mvwaddch(featureWindow, height, width/2 + 1, ACS_DEGREE);
-  mvwprintw(featureWindow, height, width/2 + 2, "C");
+
+  mvwprintw(featureWindow, height , tempStartX, "%d", temp);
+  mvwaddch(featureWindow, height, tempStartX + tempLength, ACS_DEGREE);
+  mvwprintw(featureWindow, height,tempStartX + tempLength + 1, "C");
 }

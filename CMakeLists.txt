@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 project (Amihot)
 add_executable(Amihot main.cpp SensorChip.cpp SensorSubfeature.cpp
-TempFeature.cpp SensorFanFeature.cpp  SensorAbstractFeature.cpp ChipGetter.cpp Graph.cpp TempFeatureWin.cpp Graph2.cpp )
+TempFeature.cpp SensorFanFeature.cpp  SensorAbstractFeature.cpp ChipGetter.cpp Graph.cpp TempFeatureWin.cpp ChipWindow.cpp )
 
 find_package( Curses REQUIRED )
 find_library(LM_SENSORS libsensors.so /usr/lib)

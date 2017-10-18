@@ -21,8 +21,8 @@ public:
 
 
   SensorChip(sensors_chip_name const *);
-  std::string getName();
-  std::string getAdapterName();
+  const char * getName();
+  const char * getAdapterName();
 
 
 

@@ -1,11 +1,13 @@
 #include <iostream>
 #include <vector>
 #include <sensors/sensors.h>
+#include <unistd.h>
 #include "SensorChip.hpp"
 #include "ChipGetter.hpp"
 #include <ncurses.h>
 #include "Graph.hpp"
 #include "TempFeatureWin.hpp"
+#include "ChipWindow.hpp"
 SensorChip * sensorChip;
 
 void test() {
@@ -62,12 +64,20 @@ int main() {
 
    std::vector <SensorChip> sensorChips;
   sensorChips = ChipGetter::getChips();
-  TempFeature tempFeature = sensorChips[1].temperatureFeatures[1];
-  int width = strlen(tempFeature.getName()) + 4;
-  getch();
-  TempFeatureWin tfw(stdscr, tempFeature, 2, width);
+  TempFeature tempFeature = sensorChips[0].temperatureFeatures[0];
+  //int width = strlen(tempFeature.getName()) + 4;
+  //getch();
+  /*TempFeatureWin tfw(stdscr, sensorChips[0].temperatureFeatures[0], 5, 7);
   tfw.refresh();
-  getch();
+  while(true) {
+   sleep(1);
+   tfw.refresh();
+   }*/
+
+  ChipWindow chipWindow(sensorChips[1]);
+  chipWindow.showTempFeatures();
+
+
 
 
 

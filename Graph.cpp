@@ -24,15 +24,12 @@ void Graph::fillGraph() {
   cleanUpGraph();
   for(int i = 0; i < heightOfGraphFill; i++) {
     if(i <= 7) {
-      wprintw(stdscr, "%d ", i);
       fillGraphGreen(height - i);
     }
     if(i <= 14 && i > 7) {
-      wprintw(stdscr, "%d ", i);
       fillGraphYellow(height - i);
     }
     if(i < 21 && i > 14) {
-      wprintw(stdscr, "%d ", i);
       fillGraphRed(height - i);
     }
   }

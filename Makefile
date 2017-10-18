@@ -150,6 +150,33 @@ ChipGetter.cpp.s:
 	$(MAKE) -f CMakeFiles/Amihot.dir/build.make CMakeFiles/Amihot.dir/ChipGetter.cpp.s
 .PHONY : ChipGetter.cpp.s
 
+ChipWindow.o: ChipWindow.cpp.o
+
+.PHONY : ChipWindow.o
+
+# target to build an object file
+ChipWindow.cpp.o:
+	$(MAKE) -f CMakeFiles/Amihot.dir/build.make CMakeFiles/Amihot.dir/ChipWindow.cpp.o
+.PHONY : ChipWindow.cpp.o
+
+ChipWindow.i: ChipWindow.cpp.i
+
+.PHONY : ChipWindow.i
+
+# target to preprocess a source file
+ChipWindow.cpp.i:
+	$(MAKE) -f CMakeFiles/Amihot.dir/build.make CMakeFiles/Amihot.dir/ChipWindow.cpp.i
+.PHONY : ChipWindow.cpp.i
+
+ChipWindow.s: ChipWindow.cpp.s
+
+.PHONY : ChipWindow.s
+
+# target to generate assembly for a file
+ChipWindow.cpp.s:
+	$(MAKE) -f CMakeFiles/Amihot.dir/build.make CMakeFiles/Amihot.dir/ChipWindow.cpp.s
+.PHONY : ChipWindow.cpp.s
+
 Graph.o: Graph.cpp.o
 
 .PHONY : Graph.o
@@ -176,33 +203,6 @@ Graph.s: Graph.cpp.s
 Graph.cpp.s:
 	$(MAKE) -f CMakeFiles/Amihot.dir/build.make CMakeFiles/Amihot.dir/Graph.cpp.s
 .PHONY : Graph.cpp.s
-
-Graph2.o: Graph2.cpp.o
-
-.PHONY : Graph2.o
-
-# target to build an object file
-Graph2.cpp.o:
-	$(MAKE) -f CMakeFiles/Amihot.dir/build.make CMakeFiles/Amihot.dir/Graph2.cpp.o
-.PHONY : Graph2.cpp.o
-
-Graph2.i: Graph2.cpp.i
-
-.PHONY : Graph2.i
-
-# target to preprocess a source file
-Graph2.cpp.i:
-	$(MAKE) -f CMakeFiles/Amihot.dir/build.make CMakeFiles/Amihot.dir/Graph2.cpp.i
-.PHONY : Graph2.cpp.i
-
-Graph2.s: Graph2.cpp.s
-
-.PHONY : Graph2.s
-
-# target to generate assembly for a file
-Graph2.cpp.s:
-	$(MAKE) -f CMakeFiles/Amihot.dir/build.make CMakeFiles/Amihot.dir/Graph2.cpp.s
-.PHONY : Graph2.cpp.s
 
 SensorAbstractFeature.o: SensorAbstractFeature.cpp.o
 
@@ -405,12 +405,12 @@ help:
 	@echo "... ChipGetter.o"
 	@echo "... ChipGetter.i"
 	@echo "... ChipGetter.s"
+	@echo "... ChipWindow.o"
+	@echo "... ChipWindow.i"
+	@echo "... ChipWindow.s"
 	@echo "... Graph.o"
 	@echo "... Graph.i"
 	@echo "... Graph.s"
-	@echo "... Graph2.o"
-	@echo "... Graph2.i"
-	@echo "... Graph2.s"
 	@echo "... SensorAbstractFeature.o"
 	@echo "... SensorAbstractFeature.i"
 	@echo "... SensorAbstractFeature.s"
