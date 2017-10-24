@@ -5,6 +5,7 @@
 #include "Graph.hpp"
 #include <ncurses.h>
 #include <unistd.h>
+#include <string.h>
 
 ChipWindow::ChipWindow(SensorChip sensorChip) {
   sensorChips.push_back(sensorChip);
@@ -12,12 +13,25 @@ ChipWindow::ChipWindow(SensorChip sensorChip) {
   tempFeatures = sensorChips[0].temperatureFeatures;
   nrOfTempFeatures = tempFeatures.size();
   startIndexToDisplay = 0;
+  chipWindow = derwin(stdscr, height, width , 2, 1);
+  showChipWindowInformations();
+
+  box(chipWindow, 0, 0);
+  wrefresh(chipWindow);
+
 
   const char *longestName = "";
   setMaxNrOfTempFeatWin(longestName);
   widthOfTempFeatWin = strlen(longestName) + 4 ;
-  padding = (width - (widthOfTempFeatWin * maxNrOfTempFeatWin)) / 2;
+  padding = (spaceForTempFeatWins - (widthOfTempFeatWin * maxNrOfTempFeatWin)) / 2;
 
+}
+
+
+void ChipWindow::refreshWidthAndHeight() {
+  width = getmaxx(stdscr) - 2;
+  height = getmaxy(stdscr) - 4;
+  spaceForTempFeatWins = width - 2;
 }
 
 
@@ -27,18 +41,10 @@ void ChipWindow::setMaxNrOfTempFeatWin(const char*&longestName) {
       longestName = tempFeatures[i].getName();
   }
 
-  maxNrOfTempFeatWin = width/strlen(longestName);
+   maxNrOfTempFeatWin = spaceForTempFeatWins/strlen(longestName);
 
   if(maxNrOfTempFeatWin > nrOfTempFeatures)
     maxNrOfTempFeatWin = nrOfTempFeatures;
-}
-
-
-
-void ChipWindow::refreshWidthAndHeight() {
-  width = getmaxx(stdscr);
-  width = width - 2 - 4; // -2 because of border, -4 because of side arrows
-  height = getmaxy(stdscr);
 }
 
 char ChipWindow::showTempFeatures() {
@@ -57,8 +63,10 @@ char ChipWindow::showTempFeatures() {
 }
 
 TempFeatureWin ChipWindow::createTempFeatWin(int tempFeat, int tempFeatWin) {
-  return TempFeatureWin(stdscr, tempFeatures[tempFeat],
-                        padding + (tempFeatWin * widthOfTempFeatWin),
+  int heightOfTempFeatWin = height - 4;
+  return TempFeatureWin(chipWindow, tempFeatures[tempFeat],
+                       padding + (tempFeatWin * widthOfTempFeatWin),
+                        heightOfTempFeatWin,
                         widthOfTempFeatWin);
 }
 
@@ -66,4 +74,18 @@ void ChipWindow::refreshAllWindows(std::vector <TempFeatureWin> tempFeatWin) {
   for(auto a : tempFeatWin) {
     a.refresh();
   }
+
+}
+
+void ChipWindow::showChipWindowInformations() {
+  const char * chipName = sensorChips[0].getName();
+  const char * adapterName = sensorChips[0].getAdapterName();
+  std::string tmpText = "Chip: ";
+  tmpText += chipName;
+  tmpText += "\t Adapter: ";
+  tmpText += adapterName;
+  const char * text = tmpText.c_str();
+  int textLength = strlen(text);
+  mvwprintw(chipWindow, 2, spaceForTempFeatWins/2 - textLength / 2, "%s", text);
+  wrefresh(chipWindow);
 }

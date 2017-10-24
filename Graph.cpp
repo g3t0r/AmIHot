@@ -1,19 +1,32 @@
 #include <ncurses.h>
 #include "Graph.hpp"
 
-Graph::Graph(WINDOW *masterWindow, int y, int x) {
+Graph::Graph(WINDOW *masterWindow, int heightWithBorder, int y, int x) {
   this->x = x;
   this->y = y;
 
-  height = 21;
+  this->heightWithBorder = heightWithBorder;
+  height = heightWithBorder - 2; 
+  endOfLowLevelScope = height/3;
+  endOfMiddleLevelScope = (height/3)*2;
+  correctScopesOfLevels();
   width = 2;
-  height_with_border = 23;
-  width_with_borders = 4;
-  graphWindow = derwin(masterWindow, height_with_border,
-                       width_with_borders, 2, x );
+  widthWithBorder = 4;
+  graphWindow = derwin(masterWindow, heightWithBorder,
+                       widthWithBorder, 2, x );
 
   addBorders();
   wrefresh(graphWindow);
+}
+
+void Graph::correctScopesOfLevels() {
+  if(height % 3 >= 1)
+    endOfLowLevelScope++;
+  if(height % 3 == 2)
+    endOfMiddleLevelScope++;
+  if(height % 3 == 0)
+    endOfMiddleLevelScope--;
+
 }
 
 void Graph::addBorders() {
@@ -23,32 +36,60 @@ void Graph::addBorders() {
 void Graph::fillGraph() {
   cleanUpGraph();
   for(int i = 0; i < heightOfGraphFill; i++) {
-    if(i <= 7) {
+    if(isInScopeOfLowLevel(i)) {
       fillGraphGreen(height - i);
     }
-    if(i <= 14 && i > 7) {
+    if(isInScopeOfMiddleLevel(i)) {
       fillGraphYellow(height - i);
     }
-    if(i < 21 && i > 14) {
+    if(isInScopeOfHighLevel(i)) {
       fillGraphRed(height - i);
     }
   }
   wrefresh(graphWindow);
 }
 
-void Graph::setHeightOfGraphFill(int heightOfGraphFill) {
-  if(heightOfGraphFill > 21) {
-    this->heightOfGraphFill = 21;
-  }
-  else {
-    this->heightOfGraphFill = heightOfGraphFill;
+void Graph::setGraphFillFromTemp(int temp) {
+  const int PROPORTIONAL_HEIGHT = 21;
+  const int PROPORTIONAL_DIVIDER = 5;
+  int divider = PROPORTIONAL_HEIGHT * PROPORTIONAL_DIVIDER / height;
+  heightOfGraphFill = temp/divider;
+  if(heightOfGraphFill > height)
+    heightOfGraphFill = height;
+
+}
+
+
+void Graph::cleanUpGraph() {
+  for(int i = 1; i < height; i++) {
+    mvwaddch(graphWindow,  i, 1, ' ');
+    mvwaddch(graphWindow,  i, 2, ' ');
   }
 }
 
-void Graph::deleteGraph() {
-  wborder(graphWindow, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
-  delwin(graphWindow);
+
+
+
+
+
+bool Graph::isInScopeOfLowLevel(int currentInteratorValue) {
+  return currentInteratorValue <= endOfLowLevelScope;
 }
+
+bool Graph::isInScopeOfMiddleLevel(int currentIteratorValue) {
+  return currentIteratorValue <= endOfMiddleLevelScope &&
+    currentIteratorValue >= endOfLowLevelScope;
+}
+
+bool Graph::isInScopeOfHighLevel(int currentIteratorValue) {
+  return currentIteratorValue < height &&
+    currentIteratorValue > endOfMiddleLevelScope;
+}
+
+
+
+
+
 
 void Graph::fillGraphGreen(int verticalPosition){
   init_pair(1, COLOR_GREEN, COLOR_BLACK);
@@ -77,9 +118,8 @@ void Graph::setColorBlocks(int verticalPosition) {
   mvwaddch(graphWindow,  verticalPosition, 2, ACS_BLOCK);
 }
 
-void Graph::cleanUpGraph() {
-  for(int i = 1; i < height; i++) {
-    mvwaddch(graphWindow,  i, 1, ' ');
-    mvwaddch(graphWindow,  i, 2, ' ');
-  }
+
+void Graph::deleteGraph() {
+  wborder(graphWindow, ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ');
+  delwin(graphWindow);
 }

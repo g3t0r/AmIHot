@@ -74,12 +74,14 @@ int main() {
    tfw.refresh();
    }*/
 
-  ChipWindow chipWindow(sensorChips[1]);
+  box(stdscr, 0, 0);
+  refresh();
+  ChipWindow chipWindow(sensorChips[3]);
   chipWindow.showTempFeatures();
 
 
 
-
+  getch();
 
 
 

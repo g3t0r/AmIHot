@@ -6,14 +6,13 @@
 
 
 TempFeatureWin::TempFeatureWin(WINDOW * masterWin, TempFeature feat,
-                               int x, int widthWithBorder) {
+                               int x, int heightWithBorder,  int widthWithBorder) {
 
   this->widthWithBorder = widthWithBorder;
   width = widthWithBorder - 2;
-  height = 25; // 23 for Graph, 1 for temperature, 1 for name
-  heightWithBorder = height + 2;
+  height = heightWithBorder - 2;
   this->x = x;
-  y = 1;
+  y = 3;
   x += 1; //Not 0 because of border
   tempFeature.push_back(feat);
 
@@ -29,8 +28,9 @@ TempFeatureWin::TempFeatureWin(WINDOW * masterWin, TempFeature feat,
 void TempFeatureWin::createGraphWindow() {
   int graphY = 4;
   int graphX = width/2 -1;
+  int graphHeight = height -2;
 
-  graphWindow.push_back(Graph(featureWindow, graphY, graphX));
+  graphWindow.push_back(Graph(featureWindow, graphHeight, graphY, graphX));
 }
 
 
@@ -50,8 +50,8 @@ void TempFeatureWin::showFeatureName() {
 }
 
 void TempFeatureWin::refreshGraphWindow() {
-  int heightOfGraphFill = tempFeature[0].getValue()/5;
-  graphWindow[0].setHeightOfGraphFill(heightOfGraphFill);
+  int temp = tempFeature[0].getValue();
+  graphWindow[0].setGraphFillFromTemp(temp);
   graphWindow[0].fillGraph();
 }
 

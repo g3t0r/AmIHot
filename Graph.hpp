@@ -6,26 +6,34 @@
 class Graph {
   int height;
   int width;
-  int height_with_border;
-  int width_with_borders;
+  int heightWithBorder;
+  int widthWithBorder;
   int heightOfGraphFill;
   int x;
   int y;
+  int endOfLowLevelScope;
+  int endOfMiddleLevelScope;
+  int startOfHighLevelScope;
   WINDOW * graphWindow;
 
+
+  bool isInScopeOfLowLevel(int currentIteratorValue);
+  bool isInScopeOfMiddleLevel(int currentIteratorValue);
+  bool isInScopeOfHighLevel(int currentIteratorValue);
+  void correctScopesOfLevels();
+
+
   void addBorders();
-
   void cleanUpGraph();
-  void fillGraphGreen(int);
-  void fillGraphYellow(int);
-  void fillGraphRed(int);
-
-  void setColorBlocks(int);
+  void fillGraphGreen(int verticalPosition);
+  void fillGraphYellow(int verticalPosition);
+  void fillGraphRed(int verticalPosition);
+  void setColorBlocks(int verticalPosition);
 
 public:
-  Graph(WINDOW*, int, int);
+  Graph(WINDOW *masterWindow, int height, int y, int x);
 
-  void setHeightOfGraphFill(int);
+  void setGraphFillFromTemp(int temp);
   void fillGraph();
   void deleteGraph();
 

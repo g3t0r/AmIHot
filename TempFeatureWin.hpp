@@ -31,7 +31,8 @@ class TempFeatureWin {
 
 
 public:
-  TempFeatureWin(WINDOW *, TempFeature, int, int);
+  TempFeatureWin(WINDOW *masterWin, TempFeature feat, int x,
+                 int heightWithBorder, int widthWithBorder);
   void refresh();
 };
 
