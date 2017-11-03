@@ -11,10 +11,14 @@ add_executable(Amihot
   Graph.cpp
   TempFeatureWin.cpp
   ChipWindow.cpp
-  ChipWinController.cpp)
+  ChipSetter.cpp
+
+  )
 
 find_package( Curses REQUIRED )
+find_package(Threads)
 find_library(LM_SENSORS libsensors.so /usr/lib)
+find_library(LIBTINFO libtinfo.so.6 /usr/lib )
 include_directories( ${CURSES_INCLUDE_DIRS} ${PROJECT_BINARY_DIR})
-target_link_libraries( Amihot ${CURSES_LIBRARIES} ${LM_SENSORS})
+target_link_libraries( Amihot ${CURSES_LIBRARIES} ${LM_SENSORS} ${LIBTINFO} ${CMAKE_THREAD_LIBS_INIT})
 

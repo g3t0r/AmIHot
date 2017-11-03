@@ -150,32 +150,32 @@ ChipGetter.cpp.s:
 	$(MAKE) -f CMakeFiles/Amihot.dir/build.make CMakeFiles/Amihot.dir/ChipGetter.cpp.s
 .PHONY : ChipGetter.cpp.s
 
-ChipWinController.o: ChipWinController.cpp.o
+ChipSetter.o: ChipSetter.cpp.o
 
-.PHONY : ChipWinController.o
+.PHONY : ChipSetter.o
 
 # target to build an object file
-ChipWinController.cpp.o:
-	$(MAKE) -f CMakeFiles/Amihot.dir/build.make CMakeFiles/Amihot.dir/ChipWinController.cpp.o
-.PHONY : ChipWinController.cpp.o
+ChipSetter.cpp.o:
+	$(MAKE) -f CMakeFiles/Amihot.dir/build.make CMakeFiles/Amihot.dir/ChipSetter.cpp.o
+.PHONY : ChipSetter.cpp.o
 
-ChipWinController.i: ChipWinController.cpp.i
+ChipSetter.i: ChipSetter.cpp.i
 
-.PHONY : ChipWinController.i
+.PHONY : ChipSetter.i
 
 # target to preprocess a source file
-ChipWinController.cpp.i:
-	$(MAKE) -f CMakeFiles/Amihot.dir/build.make CMakeFiles/Amihot.dir/ChipWinController.cpp.i
-.PHONY : ChipWinController.cpp.i
+ChipSetter.cpp.i:
+	$(MAKE) -f CMakeFiles/Amihot.dir/build.make CMakeFiles/Amihot.dir/ChipSetter.cpp.i
+.PHONY : ChipSetter.cpp.i
 
-ChipWinController.s: ChipWinController.cpp.s
+ChipSetter.s: ChipSetter.cpp.s
 
-.PHONY : ChipWinController.s
+.PHONY : ChipSetter.s
 
 # target to generate assembly for a file
-ChipWinController.cpp.s:
-	$(MAKE) -f CMakeFiles/Amihot.dir/build.make CMakeFiles/Amihot.dir/ChipWinController.cpp.s
-.PHONY : ChipWinController.cpp.s
+ChipSetter.cpp.s:
+	$(MAKE) -f CMakeFiles/Amihot.dir/build.make CMakeFiles/Amihot.dir/ChipSetter.cpp.s
+.PHONY : ChipSetter.cpp.s
 
 ChipWindow.o: ChipWindow.cpp.o
 
@@ -432,9 +432,9 @@ help:
 	@echo "... ChipGetter.o"
 	@echo "... ChipGetter.i"
 	@echo "... ChipGetter.s"
-	@echo "... ChipWinController.o"
-	@echo "... ChipWinController.i"
-	@echo "... ChipWinController.s"
+	@echo "... ChipSetter.o"
+	@echo "... ChipSetter.i"
+	@echo "... ChipSetter.s"
 	@echo "... ChipWindow.o"
 	@echo "... ChipWindow.i"
 	@echo "... ChipWindow.s"

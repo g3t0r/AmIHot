@@ -10,7 +10,7 @@ ChipWinController::ChipWinController(void * chipWindow, char * input) {
   exit = false;
 }
 
-void ChipWinController::startListening() {
+void ChipWinController::startController() {
   while(!exit) {
     sleep(1);
     if(*input == '0') continue;

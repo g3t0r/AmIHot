@@ -16,11 +16,10 @@ ChipWindow::ChipWindow(SensorChip sensorChip) {
   chipWindow = derwin(stdscr, height, width , 2, 1);
   showChipWindowInformations();
 
-  box(chipWindow, 0, 0);
   wrefresh(chipWindow);
 
 
-  const char *longestName = "";
+  const char *longestName = getLongestName();
   setMaxNrOfTempFeatWin(longestName);
   widthOfTempFeatWin = strlen(longestName) + 4 ;
   padding = (spaceForTempFeatWins - (widthOfTempFeatWin * maxNrOfTempFeatWin)) / 2;
@@ -34,31 +33,47 @@ void ChipWindow::refreshWidthAndHeight() {
   spaceForTempFeatWins = width - 2;
 }
 
-
-void ChipWindow::setMaxNrOfTempFeatWin(const char*&longestName) {
+const char * ChipWindow::getLongestName() {
+  const char * _longestName = "";
   for(int i = 0; i < nrOfTempFeatures; i++) {
-    if(strlen(longestName) < strlen(tempFeatures[i].getName()))
-      longestName = tempFeatures[i].getName();
+    if(strlen(_longestName) < strlen(tempFeatures[i].getName()))
+      _longestName = tempFeatures[i].getName();
   }
+  return _longestName;
+}
 
-   maxNrOfTempFeatWin = spaceForTempFeatWins/strlen(longestName);
+void ChipWindow::setMaxNrOfTempFeatWin(const char* longestName) {
+  maxNrOfTempFeatWin = spaceForTempFeatWins/(strlen(longestName) + 4);
 
   if(maxNrOfTempFeatWin > nrOfTempFeatures)
     maxNrOfTempFeatWin = nrOfTempFeatures;
 }
 
 char ChipWindow::showTempFeatures() {
-  std::vector <TempFeatureWin>  tempFeatWindows;
-  int numberOfWindow = 0;
-
-  for(int i = startIndexToDisplay; i < maxNrOfTempFeatWin; i++) {
-    tempFeatWindows.push_back(createTempFeatWin(i, numberOfWindow));
-    numberOfWindow++;
-  }
-
   while(true) {
-    refreshAllWindows(tempFeatWindows);
-    sleep(1);
+    wclear(chipWindow);
+    showArrows();
+    showChipWindowInformations();
+    wrefresh(chipWindow);
+    char input = startLoop();
+    int maxStartIndx = nrOfTempFeatures - maxNrOfTempFeatWin;
+    switch(input) {
+    case '<':
+      if(startIndexToDisplay != 0) {
+        startIndexToDisplay--;
+      }
+      break;
+
+    case '>':
+      if(startIndexToDisplay != maxStartIndx) {
+        startIndexToDisplay++;
+      }
+      break;
+
+    default:
+      return input;
+    }
+
   }
 }
 
@@ -74,7 +89,53 @@ void ChipWindow::refreshAllWindows(std::vector <TempFeatureWin> tempFeatWin) {
   for(auto a : tempFeatWin) {
     a.refresh();
   }
+}
 
+char ChipWindow::startLoop() {
+  std::vector <TempFeatureWin>  tempFeatWin;
+  int numberOfWindow = 0;
+
+  for(int i = startIndexToDisplay; i < maxNrOfTempFeatWin + startIndexToDisplay; i++) {
+    tempFeatWin.push_back(createTempFeatWin(i, numberOfWindow));
+    numberOfWindow++;
+  }
+
+  char input = 0;
+  do {
+    refreshAllWindows(tempFeatWin);
+    usleep(50000); //0.5s
+    input = getInput();
+  }while(input == 0);
+  return input;
+}
+
+char ChipWindow::getInput() {
+  int input = wgetch(stdscr);
+  switch(input) {
+  case 'Q':
+  case 'q':
+    return 'Q';
+
+  case 'H':
+  case 'h':
+    return 'H';
+
+  case KEY_RESIZE:
+    return 'R';
+
+  case KEY_LEFT:
+    return '<';
+
+  case KEY_RIGHT:
+    return '>';
+
+  case KEY_UP:
+    return 'U';
+
+  case KEY_DOWN:
+    return 'D';
+  }
+  return 0;
 }
 
 void ChipWindow::showChipWindowInformations() {
@@ -88,4 +149,16 @@ void ChipWindow::showChipWindowInformations() {
   int textLength = strlen(text);
   mvwprintw(chipWindow, 2, spaceForTempFeatWins/2 - textLength / 2, "%s", text);
   wrefresh(chipWindow);
+}
+
+void ChipWindow::showArrows() {
+  if(startIndexToDisplay != 0) {
+    for(int i = 0; i < height; i++)
+      mvwaddch(chipWindow, i, 0, ACS_LARROW);
+  }
+
+  if(startIndexToDisplay != (nrOfTempFeatures - maxNrOfTempFeatWin)) {
+    for(int i = 0; i < height; i++)
+      mvwaddch(chipWindow, i, width -1, ACS_RARROW);
+  }
 }

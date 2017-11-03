@@ -7,7 +7,13 @@
 #include <ncurses.h>
 #include "Graph.hpp"
 #include "TempFeatureWin.hpp"
+#include "ChipSetter.hpp"
 #include "ChipWindow.hpp"
+
+
+
+
+
 SensorChip * sensorChip;
 
 void test() {
@@ -37,53 +43,27 @@ int main() {
   //test();
   // std::cout << sensorChip->getName() << "     " << &sensorChip  << std::endl;
   initscr();
-  /*wborder(stdscr, 0,0,0,0,0,0,0,0);
-  mvprintw(getmaxy(stdscr) -2,0, "!");
+
+  keypad(stdscr, true);
+  //''cbreak();
+  noecho();
+  nodelay(stdscr, true);
+  curs_set(0);
+  //wborder(stdscr, 0,0,0,0,0,0,0,0);
+  /*mvprintw(getmaxy(stdscr) -2,0, "!");
   refresh();
   getch();*/
 
   start_color();
-  init_pair(1, COLOR_CYAN, COLOR_BLACK);
-
-  //attron(COLOR_PAIR(1));
-
-
-  /*Graph graph(stdscr, 5,5);
-  refresh();
-  getch(); 
-  graph.setHeightOfGraphFill(7);
-  graph.fillGraph();
-  getch();
-  graph.setHeightOfGraphFill(14);
-  graph.fillGraph();
-  getch();
-  graph.setHeightOfGraphFill(7);
-  graph.fillGraph();
-  getch();*/
-
-
-   std::vector <SensorChip> sensorChips;
+  std::vector <SensorChip> sensorChips;
   sensorChips = ChipGetter::getChips();
-  TempFeature tempFeature = sensorChips[0].temperatureFeatures[0];
-  //int width = strlen(tempFeature.getName()) + 4;
-  //getch();
-  /*TempFeatureWin tfw(stdscr, sensorChips[0].temperatureFeatures[0], 5, 7);
-  tfw.refresh();
-  while(true) {
-   sleep(1);
-   tfw.refresh();
-   }*/
+  //  ChipSetter chipSetter(sensorChips);
+  // chipSetter.setSensor();
+  //ChipWindow cw(sensorChips[0]);
+  //cw.showTempFeatures();
 
-  box(stdscr, 0, 0);
-  refresh();
-  ChipWindow chipWindow(sensorChips[3]);
-  chipWindow.showTempFeatures();
-
-
-
-  getch();
-
-
+  ChipSetter cS(sensorChips);
+  cS.setSensor();
 
   endwin();
 

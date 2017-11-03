@@ -16,7 +16,7 @@ class ChipWinController {
 
 public:
   ChipWinController(void * ChipWindow, char * input);
-  void startListening();
+  void startController();
 };
 
 

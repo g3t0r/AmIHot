@@ -7,7 +7,6 @@
 #include "SensorChip.hpp"
 #include "TempFeature.hpp"
 #include "vector"
-#include "Graph2.hpp"
 
 class TempFeatureWin {
 

@@ -7,7 +7,6 @@
 #include "ChipWinController.hpp"
 
 class ChipWindow {
-  friend class ChipWinController;
   std::vector <SensorChip> sensorChips;
   std::vector <TempFeature> tempFeatures;
   int widthOfTempFeatWin;
@@ -18,12 +17,15 @@ class ChipWindow {
   int height;
   int padding;
   int spaceForTempFeatWins;
-  int signal;
   WINDOW * chipWindow;
 
-  void setMaxNrOfTempFeatWin(const char*&name);
+  void showArrows();
+  const char* getLongestName();
+  void setMaxNrOfTempFeatWin(const char* name);
   void refreshAllWindows(std::vector <TempFeatureWin> tempFeatWin);
   void showChipWindowInformations();
+  char startLoop();
+  char getInput();
   TempFeatureWin createTempFeatWin(int tempFeat, int tempFeatWin);
 
 public:
