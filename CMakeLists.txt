@@ -18,7 +18,7 @@ add_executable(amihot
 
 find_package( Curses REQUIRED )
 find_library(LM_SENSORS libsensors.so /usr/lib)
-find_library(LIBTINFO libtinfo.so.6 /usr/lib )
+find_library(LIBTINFO libtinfo.so /usr/lib )
 include_directories( ${CURSES_INCLUDE_DIRS} ${PROJECT_BINARY_DIR})
 target_link_libraries( amihot ${CURSES_LIBRARIES} ${LM_SENSORS} ${LIBTINFO} )
 install(TARGETS amihot DESTINATION /usr/bin/)
