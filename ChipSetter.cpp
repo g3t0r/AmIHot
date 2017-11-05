@@ -4,8 +4,7 @@
 #include "SensorChip.hpp"
 #include <ncurses.h>
 #include "ChipWindow.hpp"
-#include "InputListener.hpp"
-#include "ChipWinController.hpp"
+#include "HelpWindow.hpp"
 
 ChipSetter::ChipSetter(std::vector <SensorChip> _sensorsChips) {
   sensorsChips = _sensorsChips;
@@ -20,6 +19,16 @@ ChipSetter::ChipSetter(std::vector <SensorChip> _sensorsChips) {
 void ChipSetter::setSensor() {
   while(checkInput()) {
     clear();
+    if(heightWithBorder < 15) {
+
+      mvprintw(height/2, width/2 - 5, "Too Small!");
+      refresh();
+      nodelay(stdscr, false);
+      getch();
+      nodelay(stdscr, true);
+      continue;
+
+    }
     ChipWindow chipWin(sensorsChips[startIndex]);
     showArrows();
     showBorder();
@@ -42,6 +51,9 @@ bool ChipSetter::checkInput() {
   case 'R':
     refreshSize();
     break;
+  case '?':
+    showHelp();
+    break;
   }
   return true;
 }
@@ -51,7 +63,10 @@ void ChipSetter::showChipWindow(ChipWindow chipWindow) {
 }
 
 void ChipSetter::showHelp() {
-  //Create class to generate this window
+  clear();
+  showBorder();
+  showTitle();
+  HelpWindow::showHelpWindow();
 }
 
 void ChipSetter::showArrows() {

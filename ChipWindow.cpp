@@ -2,7 +2,6 @@
 #include "SensorChip.hpp"
 #include "TempFeature.hpp"
 #include "TempFeatureWin.hpp"
-#include "Graph.hpp"
 #include <ncurses.h>
 #include <unistd.h>
 #include <string.h>
@@ -22,6 +21,7 @@ ChipWindow::ChipWindow(SensorChip sensorChip) {
   const char *longestName = getLongestName();
   setMaxNrOfTempFeatWin(longestName);
   widthOfTempFeatWin = strlen(longestName) + 4 ;
+  if(widthOfTempFeatWin % 2 != 0) widthOfTempFeatWin++;
   padding = (spaceForTempFeatWins - (widthOfTempFeatWin * maxNrOfTempFeatWin)) / 2;
 
 }
@@ -78,7 +78,7 @@ char ChipWindow::showTempFeatures() {
 }
 
 TempFeatureWin ChipWindow::createTempFeatWin(int tempFeat, int tempFeatWin) {
-  int heightOfTempFeatWin = height - 4;
+  int heightOfTempFeatWin = height - 2;
   return TempFeatureWin(chipWindow, tempFeatures[tempFeat],
                        padding + (tempFeatWin * widthOfTempFeatWin),
                         heightOfTempFeatWin,
@@ -116,9 +116,8 @@ char ChipWindow::getInput() {
   case 'q':
     return 'Q';
 
-  case 'H':
-  case 'h':
-    return 'H';
+  case '?':
+    return '?';
 
   case KEY_RESIZE:
     return 'R';
@@ -141,17 +140,20 @@ char ChipWindow::getInput() {
 void ChipWindow::showChipWindowInformations() {
   const char * chipName = sensorChips[0].getName();
   const char * adapterName = sensorChips[0].getAdapterName();
-  std::string tmpText = "Chip: ";
-  tmpText += chipName;
-  tmpText += "\t Adapter: ";
-  tmpText += adapterName;
-  const char * text = tmpText.c_str();
-  int textLength = strlen(text);
-  mvwprintw(chipWindow, 2, spaceForTempFeatWins/2 - textLength / 2, "%s", text);
+  std::string chipText = "Chip: ";
+  chipText += chipName;
+  std::string adapterText = "Adapter: ";
+  adapterText += adapterName;
+
+
+  mvwprintw(chipWindow, 0 ,1, "Press ? for help");
+  mvwprintw(chipWindow, 0, width /2 - chipText.length()/2, "%s", chipText.c_str());
+  mvwprintw(chipWindow, 1, width /2 - adapterText.length()/2, "%s", adapterText.c_str());
   wrefresh(chipWindow);
 }
 
 void ChipWindow::showArrows() {
+  chtype left = ACS_LARROW;
   if(startIndexToDisplay != 0) {
     for(int i = 0; i < height; i++)
       mvwaddch(chipWindow, i, 0, ACS_LARROW);

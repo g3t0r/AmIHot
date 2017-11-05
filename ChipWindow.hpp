@@ -4,7 +4,6 @@
 #include "SensorChip.hpp"
 #include "TempFeature.hpp"
 #include "TempFeatureWin.hpp"
-#include "ChipWinController.hpp"
 
 class ChipWindow {
   std::vector <SensorChip> sensorChips;

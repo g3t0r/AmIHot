@@ -92,7 +92,7 @@ bool Graph::isInScopeOfHighLevel(int currentIteratorValue) {
 
 
 void Graph::fillGraphGreen(int verticalPosition){
-  init_pair(1, COLOR_GREEN, COLOR_BLACK);
+  init_pair(1, COLOR_GREEN, COLOR_GREEN);
   wattron(graphWindow, COLOR_PAIR(1));
   setColorBlocks(verticalPosition);
   wattroff(graphWindow, COLOR_PAIR(1));
@@ -100,22 +100,22 @@ void Graph::fillGraphGreen(int verticalPosition){
 }
 
 void Graph::fillGraphYellow(int verticalPosition){
-  init_pair(2, COLOR_YELLOW, COLOR_BLACK);
+  init_pair(2, COLOR_YELLOW, COLOR_YELLOW);
   wattron(graphWindow, COLOR_PAIR(2));
   setColorBlocks(verticalPosition);
   wattroff(graphWindow, COLOR_PAIR(2));
 }
 
 void Graph::fillGraphRed(int verticalPosition){
-  init_pair(3, COLOR_RED, COLOR_BLACK);
+  init_pair(3, COLOR_RED, COLOR_RED);
   wattron(graphWindow, COLOR_PAIR(3));
   setColorBlocks(verticalPosition);
   wattroff(graphWindow, COLOR_PAIR(3));
 }
 
 void Graph::setColorBlocks(int verticalPosition) {
-  mvwaddch(graphWindow,  verticalPosition, 1, ACS_BLOCK);
-  mvwaddch(graphWindow,  verticalPosition, 2, ACS_BLOCK);
+  mvwaddch(graphWindow,  verticalPosition, 1, ACS_CKBOARD);
+  mvwaddch(graphWindow,  verticalPosition, 2, ACS_CKBOARD);
 }
 
 

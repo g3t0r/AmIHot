@@ -12,7 +12,7 @@ TempFeatureWin::TempFeatureWin(WINDOW * masterWin, TempFeature feat,
   width = widthWithBorder - 2;
   height = heightWithBorder - 2;
   this->x = x;
-  y = 3;
+  y = 2;
   x += 1; //Not 0 because of border
   tempFeature.push_back(feat);
 
