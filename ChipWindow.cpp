@@ -78,7 +78,7 @@ char ChipWindow::showTempFeatures() {
 }
 
 TempFeatureWin ChipWindow::createTempFeatWin(int tempFeat, int tempFeatWin) {
-  int heightOfTempFeatWin = height - 2;
+  int heightOfTempFeatWin = height - 3;
   return TempFeatureWin(chipWindow, tempFeatures[tempFeat],
                        padding + (tempFeatWin * widthOfTempFeatWin),
                         heightOfTempFeatWin,
@@ -146,7 +146,7 @@ void ChipWindow::showChipWindowInformations() {
   adapterText += adapterName;
 
 
-  mvwprintw(chipWindow, 0 ,1, "Press ? for help");
+  mvwprintw(chipWindow, height - 1 ,1, "Press ? for help");
   mvwprintw(chipWindow, 0, width /2 - chipText.length()/2, "%s", chipText.c_str());
   mvwprintw(chipWindow, 1, width /2 - adapterText.length()/2, "%s", adapterText.c_str());
   wrefresh(chipWindow);
