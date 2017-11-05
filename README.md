@@ -12,9 +12,13 @@ This is a program to monitor the temperature of the PC and display it to the bar
  - lm_sensors
  - ncurses
  - libsensors
- 
-# How to install:
-<b>./configure<br/>
- make <br/>
- sudo make install </b>
 
+# How to install:
+```bash
+sudo apt-get install build-essential cmake git libsensors4-dev ncurses-dev
+git clone https://github.com/g3t0r/AmIHot.git
+cd AmIHot && mkdir build && cd build
+cmake ..
+make
+sudo make install
+```
