@@ -16,5 +16,5 @@ This is a program to monitor the temperature of the PC and display it to the bar
 # How to install:
 <b>./configure<br/>
  make <br/>
- make install </b>
+ sudo make install </b>
 
