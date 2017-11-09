@@ -123,15 +123,23 @@ char ChipWindow::getInput() {
     return 'R';
 
   case KEY_LEFT:
+  case 'h':
+  case 'H':
     return '<';
 
   case KEY_RIGHT:
+  case 'l':
+  case 'L':
     return '>';
 
   case KEY_UP:
+  case 'k':
+  case 'K':
     return 'U';
 
   case KEY_DOWN:
+  case 'j':
+  case 'J':
     return 'D';
   }
   return 0;
