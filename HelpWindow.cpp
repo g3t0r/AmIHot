@@ -6,7 +6,7 @@
 
 void HelpWindow::showHelpWindow() {
   nodelay(stdscr, false);
-  std::string text[8] = {"AmIHot 1.0.0 created by g3t0r (g3t0r.github@gmail.com)",
+  std::string text[8] = {"AmIHot 1.1.0 created by g3t0r (g3t0r.github@gmail.com)",
                          "Use arrows to move or VIM keybindigs (h,j,k,l)",
                          "Press Q to quit",
                          "No sensors detected?",

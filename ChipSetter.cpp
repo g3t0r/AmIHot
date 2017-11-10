@@ -89,7 +89,7 @@ void ChipSetter::showBorder() {
 }
 
 void ChipSetter::showTitle() {
-  const char * title = "[ AmIHot 1.0.0 ]";
+  const char * title = "[ AmIHot 1.1.0 ]";
   int titleLength = strlen(title);
   mvprintw(0, getmaxx(stdscr)/2 - titleLength/2, "%s", title);
 }
