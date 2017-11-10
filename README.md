@@ -1,4 +1,4 @@
-# AmIHot 1.0.0
+# AmIHot 1.1.0
 
 
 This is a program to monitor the temperature of the PC and display it to the bar charts in the terminal or in text mode
