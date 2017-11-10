@@ -17,8 +17,6 @@ class ChipSetter {
   bool checkInput();
   void showChipWindow(ChipWindow chipWindow);
   void showHelp();
-  void showBorder();
-  void showTitle();
   void showArrows();
   void refreshSize();
   bool isInputCorrect(int _input);
@@ -27,6 +25,8 @@ class ChipSetter {
 public:
   ChipSetter(std::vector <SensorChip> sensorsChips);
   void setSensor();
+  static void showBorder();
+  static void showTitle();
 };
 
 #endif
