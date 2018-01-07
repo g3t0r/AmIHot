@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
-SET(CMAKE_CXX_FLAGS "-std=c++0x")
+set (CMAKE_CXX_STANDARD 11)
 project (amihot)
 add_executable(amihot
   main.cpp
